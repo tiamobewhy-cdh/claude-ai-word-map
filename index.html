@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="ChatGPT와 Claude를 쓰며 마주치는 AI 용어 75개를 초보자 눈높이로 정리한 위키와 14일 학습 플랜">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>AI 낱말 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: 역 이름판 헤더 → 전체 노선도(색인) → 공부 순서 → 구조 해부도 → 헷갈리는 짝 → 사전(본문 + 옆 색인) → 대응표 */
+:root{
+  --bg:#F2F4F3;--surface:#FFFFFF;--soft:#E8ECEC;--ink:#141B22;--muted:#55606A;--rule:#D7DDDF;
+  --accent:#1D5DAB;--sign:#1C2631;--onsign:#F4F7F8;--onsign-muted:#A7B4BF;
+  --here:#F6C445;--here-ink:#141B22;--scrim:rgba(14,20,26,.55);
+  --l1:#0052A4;--l2:#00A84D;--l3:#EF7C1C;--l4:#00A5DE;--l5:#996CAC;--l6:#CD7C2F;--l7:#747F00;--onl:#FFFFFF;
+  --f-display:"Do Hyeon","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1418;--surface:#171E24;--soft:#1E262D;--ink:#E5EAED;--muted:#9AA6AF;--rule:#2A343C;
+  --accent:#86B8F2;--sign:#1D2832;--onsign:#F1F4F6;--onsign-muted:#93A2AE;
+  --here:#F2C14E;--here-ink:#141B22;--scrim:rgba(0,0,0,.62);
+  --l1:#4A8FE0;--l2:#2FC778;--l3:#F5964A;--l4:#38C2EE;--l5:#B98ACB;--l6:#DE9A55;--l7:#A8B23A;--onl:#0F1418;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1418;--surface:#171E24;--soft:#1E262D;--ink:#E5EAED;--muted:#9AA6AF;--rule:#2A343C;
+  --accent:#86B8F2;--sign:#1D2832;--onsign:#F1F4F6;--onsign-muted:#93A2AE;
+  --here:#F2C14E;--here-ink:#141B22;--scrim:rgba(0,0,0,.62);
+  --l1:#4A8FE0;--l2:#2FC778;--l3:#F5964A;--l4:#38C2EE;--l5:#B98ACB;--l6:#DE9A55;--l7:#A8B23A;--onl:#0F1418;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono)}
+
+/* 역 이름판 */
+.sign{background:var(--sign);color:var(--onsign)}
+.sign-in{padding-block:28px 26px;display:grid;gap:14px}
+.sign-top{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;font:500 12px/1.4 var(--f-mono);letter-spacing:.08em;color:var(--onsign-muted)}
+.sign h1{margin:0;font:400 clamp(46px,8.5vw,88px)/1 var(--f-display);letter-spacing:-.01em}
+.lede{margin:0;max-width:40em;font-size:16px;line-height:1.75}
+.jump{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;padding-top:4px}
+.jump a{color:var(--onsign);text-decoration:underline;text-decoration-color:var(--onsign-muted);text-underline-offset:4px}
+.jump a:hover{text-decoration-color:var(--here)}
+.sign-lines{display:grid;grid-template-columns:repeat(7,1fr);height:8px}
+
+/* 섹션 공통 */
+.sec{padding-block:56px 0;scroll-margin-top:12px}
+.sec-h{display:grid;gap:6px;margin-bottom:24px;max-width:46em}
+.sec-h .eb{font:500 11.5px/1 var(--f-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.sec-h h2{margin:0;font:400 34px/1.2 var(--f-display);text-wrap:balance}
+.sec-h p{margin:0;color:var(--muted)}
+
+/* 노선 표식 */
+.mk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--c);color:var(--onl);font:600 13px/1 var(--f-mono);flex:none}
+.mk.sm{width:18px;height:18px;font-size:10.5px}
+
+/* 노선도 */
+.map{display:grid;gap:26px;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding-block:24px;padding-inline:20px}
+.mline{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;align-items:start}
+.mline-h{all:unset;cursor:pointer;display:flex;gap:10px;align-items:flex-start;border-radius:6px}
+.mline-h:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.mline-h b{display:block;font:400 20px/1.15 var(--f-display);color:var(--ink)}
+.mline-h small{display:block;font-size:12.5px;line-height:1.4;color:var(--muted);margin-top:3px}
+.mline-h:hover b{color:var(--accent)}
+.stations{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;row-gap:16px}
+.stations li{position:relative}
+.st{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 8px;min-width:66px;text-decoration:none;color:var(--ink);font-size:13px;line-height:1.3;text-align:center}
+.st::before{content:"";position:absolute;top:7px;left:0;right:0;height:4px;background:var(--c)}
+.stations li:first-child .st::before{left:50%}
+.stations li:last-child .st::before{right:50%}
+.st i{position:relative;z-index:1;width:18px;height:18px;border-radius:50%;background:var(--surface);border:4px solid var(--c)}
+.st.xfer i{width:20px;height:20px;margin-top:-1px;border:3px solid var(--ink)}
+.st span{max-width:7.5em}
+.st:hover span{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:16px;height:16px;border-radius:50%;background:var(--surface);border:4px solid var(--l3)}
+.legend i.x{border:3px solid var(--ink)}
+@media (max-width:680px){.mline{grid-template-columns:1fr;gap:12px}.map{padding-inline:14px}}
+
+/* 칩 */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.tref{display:inline-flex;align-items:center;gap:6px;padding:2px 10px 2px 8px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--ink);font-size:12.5px;line-height:1.6;text-decoration:none;white-space:nowrap}
+.tref::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.tref:hover{border-color:var(--c)}
+
+/* 공부 순서 */
+.route{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:relative}
+.route::before{content:"";position:absolute;top:16px;left:18px;right:calc(16.666% - 18px);height:4px;background:var(--ink)}
+.stop{position:relative;display:flex;flex-direction:column;gap:12px;padding-right:14px}
+.stop-n{position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--here);color:var(--here-ink);font:600 15px/1 var(--f-mono);box-shadow:0 0 0 4px var(--bg);flex:none}
+.stop-body{display:grid;gap:6px;align-content:start}
+.stop-body b{font:400 20px/1.2 var(--f-display)}
+.stop-body p{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.stop-body .chips{margin-top:4px}
+@media (max-width:900px){
+  .route{grid-template-columns:1fr;gap:22px}
+  .route::before{top:8px;bottom:8px;left:16px;right:auto;width:4px;height:auto}
+  .stop{flex-direction:row;gap:16px;padding-right:0}
+  .stop-body{flex:1;min-width:0}
+}
+
+/* 구조 해부도 */
+.anat-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:start}
+@media (max-width:920px){.anat-grid{grid-template-columns:1fr}}
+.anatomy{display:grid}
+.an-row{display:flex;flex-wrap:wrap;gap:10px}
+.an-node{flex:1 1 140px;display:grid;gap:2px;padding:12px 14px;border-radius:8px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:var(--ink);min-width:0}
+.an-node b{font:400 17px/1.25 var(--f-display)}
+.an-node span{font-size:12.5px;line-height:1.45;color:var(--muted)}
+.an-node small{font:500 11.5px/1.4 var(--f-mono);color:var(--muted);margin-top:4px}
+.an-node:hover{border-color:var(--accent)}
+.an-arrow{position:relative;height:40px;display:flex;align-items:center;justify-content:center}
+.an-arrow::before{content:"";position:absolute;top:4px;bottom:10px;left:50%;width:2px;margin-left:-1px;background:var(--muted)}
+.an-arrow::after{content:"";position:absolute;bottom:3px;left:50%;margin-left:-6px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted)}
+.an-arrow span{position:relative;z-index:1;background:var(--bg);padding:0 10px;font:500 12px/1 var(--f-mono);color:var(--muted)}
+.an-harness{border:2px dashed var(--l3);border-radius:12px;padding:16px;display:grid;gap:14px;background:var(--soft)}
+.an-label{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.an-label a{font:400 22px/1.2 var(--f-display);color:var(--ink);text-decoration:underline;text-decoration-color:var(--l3);text-underline-offset:4px}
+.an-label span{font-size:13px;color:var(--muted)}
+.an-agents{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.an-main{border:2px solid var(--ink)}
+.an-subs{position:relative;display:grid;gap:8px;padding-left:16px;border-left:2px solid var(--muted)}
+.an-subs-l{font:500 11.5px/1.4 var(--f-mono);color:var(--muted)}
+.an-sub{position:relative}
+.an-sub::before{content:"";position:absolute;left:-17px;top:50%;width:16px;height:2px;background:var(--muted)}
+@media (max-width:520px){.an-agents{grid-template-columns:1fr}}
+.example{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;display:grid;gap:14px}
+.example h3{margin:0;font:400 22px/1.25 var(--f-display)}
+.example blockquote{margin:0;padding:12px 14px;background:var(--soft);border-radius:8px;font-weight:500}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:14px}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--ink);font:600 12.5px/1 var(--f-mono)}
+.steps p{margin:0 0 6px;font-size:14.5px;line-height:1.65}
+
+/* 헷갈리는 짝 */
+.pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.pairs{grid-template-columns:1fr}}
+.pair{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px;display:grid;gap:12px;align-content:start}
+.pair h3{margin:0;font:400 21px/1.25 var(--f-display)}
+.pair-ab{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pair-ab>div{display:grid;gap:6px;align-content:start;justify-items:start}
+.pair-ab p{margin:0;font-size:13.5px;line-height:1.6}
+.pair-sum{margin:0;padding-top:12px;border-top:1px solid var(--rule);font-size:14px}
+.pair-sum b{font-weight:600;margin-right:6px}
+
+/* 사전 */
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;border-bottom:1px solid var(--rule);display:grid;gap:10px;margin-bottom:20px}
+.tb-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tb-row input,.tb-row select{height:42px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink);font:15px var(--f-body);padding:0 12px}
+.tb-row input{flex:1 1 220px;min-width:0}
+.btn{height:42px;padding:0 16px;border-radius:8px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:500 14px var(--f-body);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.tb-lines{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.lc{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 8px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:500 13px var(--f-body);cursor:pointer;white-space:nowrap;flex:none}
+.lc[data-line="0"]{padding-left:12px}
+.lc[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lc[aria-pressed="true"] .mk{box-shadow:0 0 0 2px var(--bg)}
+.tb-count{font:500 12.5px var(--f-mono);color:var(--muted);margin-left:auto}
+.dict-grid{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:30px;align-items:start}
+@media (max-width:980px){.dict-grid{grid-template-columns:1fr}.side{display:none}}
+.cards{display:grid;gap:14px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px 16px;display:grid;gap:11px;min-width:0;scroll-margin-top:calc(var(--tbh,124px) + 18px + env(safe-area-inset-top,0px));transition:box-shadow .3s}
+.card:focus{outline:none}
+.card.hl{box-shadow:0 0 0 3px var(--here)}
+.card-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.card-marks{display:flex}
+.card-marks .mk+.mk{margin-left:-5px;box-shadow:0 0 0 2px var(--surface)}
+.card-names{flex:1;min-width:0;display:grid}
+.card-names h3{margin:0;font:400 25px/1.2 var(--f-display)}
+.card-names .en{font:400 12.5px/1.5 var(--f-mono);color:var(--muted)}
+.card-meta{display:flex;align-items:center;gap:8px;font:500 12px/1 var(--f-mono);color:var(--muted)}
+.lv{border:1px solid var(--rule);border-radius:999px;padding:4px 9px;font:500 12px/1 var(--f-body);color:var(--ink)}
+.xf{font:500 11.5px/1 var(--f-mono);color:var(--muted)}
+.def{margin:0;font-size:16.5px;font-weight:600;line-height:1.6}
+.body{margin:0;font-size:15px;line-height:1.8}
+.ana{margin:0;display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.7}
+.tag{flex:none;display:inline-block;background:var(--here);color:var(--here-ink);font:600 12px/1 var(--f-body);padding:5px 8px;border-radius:4px;margin-top:3px}
+.prod{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+.prod>div{background:var(--soft);border-radius:8px;padding:10px 12px;min-width:0}
+.prod dt{font:600 11px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.prod dd{margin:2px 0 0;font-size:13.5px;line-height:1.6}
+@media (max-width:560px){.prod{grid-template-columns:1fr}.card{padding:16px}}
+.rel{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rel-l{font-size:12.5px;color:var(--muted);margin-right:2px}
+.empty{padding:28px;border:1px dashed var(--rule);border-radius:10px;color:var(--muted);text-align:center}
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tbh,124px) + 18px);max-height:calc(100vh - var(--tbh,124px) - 48px);overflow:auto;display:grid;gap:2px;padding-right:4px}
+.side-h{font:500 11.5px/1 var(--f-mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding:0 8px 8px}
+.side a{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;color:var(--ink);text-decoration:none;font-size:13.5px;line-height:1.35}
+.side a i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.side a em{font:400 11px var(--f-mono);font-style:normal;color:var(--muted)}
+.side a:hover{background:var(--soft)}
+
+/* 대응표 */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:660px;font-size:14px;line-height:1.6}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{font:600 11.5px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--soft)}
+tbody td:first-child{font-weight:600;white-space:nowrap}
+tbody td:first-child a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+tbody td:first-child a:hover{text-decoration-color:var(--accent)}
+tbody tr:last-child td{border-bottom:0}
+.note{margin-top:12px;font-size:13px;color:var(--muted)}
+
+/* 바닥 */
+.foot{padding-block:56px 72px;color:var(--muted);font-size:13.5px;line-height:1.7}
+.foot h2{font:400 20px/1.2 var(--f-display);color:var(--ink);margin:0 0 8px}
+.foot ul{margin:8px 0 0;padding-left:18px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;border-top:1px solid var(--rule);padding-top:28px}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr}}
+
+/* 학습 플랜 */
+.today{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;background:var(--sign);color:var(--onsign);border-radius:12px;padding:18px 20px}
+.today-t{display:grid;gap:5px;min-width:0}
+.today .lbl{font:600 11.5px/1.2 var(--f-mono);letter-spacing:.1em;color:var(--here)}
+.today b{font:400 clamp(22px,3.4vw,30px)/1.2 var(--f-display);text-wrap:balance}
+.today p{margin:0;font-size:14px;line-height:1.5;color:var(--onsign-muted)}
+.btn.here{background:var(--here);color:var(--here-ink);border-color:var(--here);font-weight:600}
+.btn.sm{height:34px;padding:0 12px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+@media (max-width:680px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px;display:grid;gap:2px;align-content:start}
+.stat span{font-size:12.5px;color:var(--muted)}
+.stat b{font:400 32px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat small{font:500 11.5px/1.4 var(--f-mono);color:var(--muted)}
+.track{margin-top:12px;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:16px}
+.track-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 16px;font-size:12.5px;color:var(--muted)}
+.track-h b{font-weight:600;color:var(--ink);font-size:13.5px}
+.sync::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:7px;vertical-align:1px}
+.sync.account::before{background:var(--l2)}
+.track-line{position:relative;display:grid;grid-template-columns:repeat(14,minmax(0,1fr))}
+.track-line::before{content:"";position:absolute;top:11px;left:calc(100% / 28);right:calc(100% / 28);height:4px;border-radius:2px;background:var(--rule)}
+.track-fill{position:absolute;top:11px;left:calc(100% / 28);height:4px;border-radius:2px;background:var(--ink);width:calc((100% - 100% / 14) * var(--p, 0));transition:width .4s}
+.tst{all:unset;cursor:pointer;position:relative;z-index:1;display:grid;justify-items:center}
+.tst:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:50%}
+.tst i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--surface);border:3px solid var(--rule);font:600 11px/1 var(--f-mono);font-style:normal;color:var(--muted)}
+.tst:hover i{border-color:var(--accent)}
+.tst.part i{border-color:var(--ink);color:var(--ink)}
+.tst.done i{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tst.cur i{background:var(--here);border-color:var(--here);color:var(--here-ink)}
+@media (max-width:480px){.tst i{width:22px;height:22px;border-width:2px;font-size:10px}.track-line::before,.track-fill{top:9px}}
+.recent{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:12.5px;color:var(--muted)}
+.recent-cells{display:flex;flex-wrap:wrap;gap:4px}
+.recent-cells i{width:16px;height:16px;border-radius:4px;background:var(--soft);border:1px solid var(--rule)}
+.recent-cells i.on{background:var(--l2);border-color:var(--l2)}
+.recent-cells i.today{outline:2px solid var(--ink);outline-offset:1px}
+.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+@media (max-width:820px){.days{grid-template-columns:1fr}}
+.day{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:12px;align-content:start;min-width:0;scroll-margin-top:16px}
+.day.cur{border-color:var(--here);box-shadow:0 0 0 2px var(--here)}
+.day.done{border-color:var(--l2)}
+.day-h{display:flex;align-items:flex-start;gap:12px}
+.day-tt{display:grid;gap:3px;min-width:0;flex:1}
+.day-n{font:600 11.5px/1.3 var(--f-mono);letter-spacing:.1em;color:var(--muted)}
+.day-tt b{font:400 22px/1.2 var(--f-display)}
+.day-tt p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+.day-meta{display:grid;justify-items:end;gap:6px;flex:none}
+.day-badge{font:600 11.5px/1 var(--f-body);padding:5px 8px;border-radius:999px;background:var(--here);color:var(--here-ink);white-space:nowrap}
+.day-badge.ok{background:var(--l2);color:var(--onl)}
+.day-count{font:500 12px/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.day-bar{height:4px;border-radius:2px;background:var(--soft);overflow:hidden}
+.day-bar i{display:block;height:100%;width:0;background:var(--l2);transition:width .3s}
+.cklist{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.cklist li{display:flex;align-items:flex-start;gap:10px;padding:6px;border-radius:6px}
+.cklist li:hover{background:var(--soft)}
+.cklist li.ck-sep{font:600 11px/1 var(--f-mono);letter-spacing:.12em;color:var(--muted);padding:12px 6px 4px}
+.cklist li.ck-sep:hover{background:none}
+.ck{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0;cursor:pointer;font-size:14.5px;line-height:1.5}
+.ck input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--l2);cursor:pointer}
+.ck .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;margin-top:8px}
+.ck em{font:400 11.5px/1 var(--f-mono);font-style:normal;color:var(--muted);margin-left:7px}
+.ck input:checked ~ .ck-t{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--muted)}
+.mtag{flex:none;font:600 11px/1 var(--f-body);padding:4px 6px;border-radius:4px;background:var(--soft);color:var(--ink);margin-top:2px}
+.ck-go{flex:none;font-size:12.5px;line-height:1.5;margin-top:1px;color:var(--accent)}
+.linkbtn{all:unset;cursor:pointer;flex:none;font-size:12.5px;line-height:1.5;margin-top:1px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.linkbtn:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.day-f{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:12px}
+.day-lines{display:flex;gap:4px}
+@media (max-width:560px){.day{padding:14px}}
+
+/* 암기 카드 */
+.fc{position:fixed;inset:0;z-index:50;background:var(--scrim);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.fc-panel{width:min(560px,100%);max-height:100%;overflow:auto;background:var(--bg);border-radius:14px;padding:18px;display:grid;gap:14px}
+.fc-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.fc-top b{font:400 22px/1.2 var(--f-display)}
+.fc-top small{display:block;font:500 12px/1.4 var(--f-mono);color:var(--muted)}
+.fc-card{width:100%;min-height:280px;border-radius:12px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:inherit;padding:26px 22px;display:grid;place-content:center;justify-items:center;gap:12px;text-align:center;cursor:pointer}
+.fc-card:hover{border-color:var(--ink)}
+.fc-card span{display:block}
+.fc-ko{font:400 36px/1.2 var(--f-display)}
+.fc-ko.sm{font-size:22px}
+.fc-en{font:400 13px/1.4 var(--f-mono);color:var(--muted)}
+.fc-hint{font-size:12.5px;color:var(--muted);margin-top:6px}
+.fc-def{font-size:17px;font-weight:600;line-height:1.6}
+.fc-ana{font-size:14.5px;line-height:1.7;color:var(--ink)}
+.fc-empty{color:var(--muted);line-height:1.7}
+.fc-ctrl{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.fc-ctrl .grp{display:flex;gap:8px;flex-wrap:wrap}
+.btn[aria-pressed="true"]{background:var(--l2);color:var(--onl);border-color:var(--l2)}
+.fc-prog{font:500 12.5px var(--f-mono);color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="sign">
+  <div class="wrap sign-in">
+    <div class="sign-top"><span>AI GLOSSARY MAP</span><span id="stat">2026.10 기준</span></div>
+    <h1>AI 낱말 지도</h1>
+    <p class="lede">ChatGPT와 Claude를 쓰다 보면 마주치는 말들을 처음 배우는 사람 눈높이로 풀었습니다. 노선도에서 역을 누르면 그 용어의 설명으로 이동합니다.</p>
+    <nav class="jump" aria-label="바로가기">
+      <a href="#plan">14일 학습 플랜</a><a href="#map">전체 노선도</a><a href="#route">추천 공부 순서</a><a href="#anatomy">구조 한눈에</a><a href="#pairs">헷갈리는 짝</a><a href="#dict">용어 사전</a><a href="#compare">ChatGPT · Claude 대응표</a>
+    </nav>
+  </div>
+  <div class="sign-lines" id="signLines" aria-hidden="true"></div>
+</header>
+
+<main>
+  <section class="sec" id="plan">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Daily plan</span>
+        <h2>14일 학습 플랜</h2>
+        <p>12일 동안 하루 6~7역씩 75개 용어를 모두 지나고, 마지막 이틀은 총복습입니다. 설명을 읽고 비유를 내 말로 한 번 말해 볼 수 있으면 체크하세요.</p>
+      </div>
+      <div class="today" id="today"></div>
+      <div class="stats" id="stats"></div>
+      <div class="track">
+        <div class="track-h"><b>노선 진행</b><span class="sync local" id="sync">이 브라우저에 저장 중</span></div>
+        <div class="track-line" id="trackLine"></div>
+        <div class="recent"><span>최근 2주 학습한 날</span><div class="recent-cells" id="recent"></div></div>
+      </div>
+      <div class="days" id="days"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="map">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Route map</span>
+        <h2>전체 노선도</h2>
+        <p>용어를 일곱 개 노선으로 나눠 역처럼 배치했습니다. 노선 이름을 누르면 사전에서 그 노선만 모아 봅니다.</p>
+      </div>
+      <div class="map" id="mapLines"></div>
+      <div class="legend">
+        <span><i></i>일반역</span>
+        <span><i class="x"></i>환승역 · 두 노선에 걸친 용어</span>
+        <span class="mono">3-04 = 3호선 4번째 역</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="route">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Study route</span>
+        <h2>추천 공부 순서</h2>
+        <p>처음이라면 이 순서대로 타세요. 한 구간을 읽고, 두 사람이 번갈아 서로에게 설명해 보면 오래 남습니다.</p>
+      </div>
+      <ol class="route" id="routeList"></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="anatomy">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Anatomy</span>
+        <h2>구조 한눈에</h2>
+        <p>에이전트에게 일을 맡기면 안에서 무슨 일이 일어나는지 한 장에 그렸습니다. 상자를 누르면 해당 용어로 갑니다.</p>
+      </div>
+      <div class="anat-grid">
+        <div class="anatomy">
+          <div class="an-row">
+            <a class="an-node" href="#t-prompt"><b>사용자 요청</b><span>프롬프트</span></a>
+            <a class="an-node" href="#t-trigger"><b>정해진 시각 · 사건</b><span>트리거, 예약 작업</span></a>
+          </div>
+          <div class="an-arrow"><span>시작</span></div>
+          <div class="an-harness">
+            <div class="an-label"><a href="#t-harness">하네스</a><span>모델을 일하게 만드는 틀. 앱이 이 역할을 합니다.</span></div>
+            <div class="chips">
+              <a class="tref" href="#t-system-prompt" style="--c:var(--l2)">시스템 프롬프트</a>
+              <a class="tref" href="#t-agent-loop" style="--c:var(--l3)">에이전트 루프</a>
+              <a class="tref" href="#t-context-engineering" style="--c:var(--l2)">컨텍스트 관리</a>
+              <a class="tref" href="#t-memory" style="--c:var(--l4)">메모리</a>
+              <a class="tref" href="#t-permissions" style="--c:var(--l7)">권한 · 승인</a>
+            </div>
+            <div class="an-agents">
+              <a class="an-node an-main" href="#t-main-agent"><b>메인 에이전트</b><span>계획을 세우고, 일을 나누고, 결과를 모읍니다.</span><small>두뇌 = 모델(LLM)</small></a>
+              <div class="an-subs">
+                <span class="an-subs-l">나눠 맡기고 요약만 돌려받음</span>
+                <a class="an-node an-sub" href="#t-sub-agent"><b>서브 에이전트 A</b><span>자료 조사</span></a>
+                <a class="an-node an-sub" href="#t-sub-agent"><b>서브 에이전트 B</b><span>표 정리</span></a>
+                <a class="an-node an-sub" href="#t-sub-agent"><b>서브 에이전트 C</b><span>검토</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="an-arrow"><span>도구 호출 · 결과 돌려받기</span></div>
+          <div class="an-row">
+            <a class="an-node" href="#t-web-search"><b>웹 검색</b><span>최신 정보와 출처</span></a>
+            <a class="an-node" href="#t-code-execution"><b>코드 실행</b><span>계산, 차트, 파일</span></a>
+            <a class="an-node" href="#t-browser-agent"><b>브라우저 · 컴퓨터</b><span>화면을 보고 클릭</span></a>
+            <a class="an-node" href="#t-mcp"><b>MCP 커넥터</b><span>드라이브, 메일, 슬랙</span></a>
+          </div>
+          <div class="an-arrow"><span>완성</span></div>
+          <div class="an-row">
+            <a class="an-node" href="#t-artifact"><b>결과물</b><span>답변, 문서, 표, 아티팩트</span></a>
+          </div>
+        </div>
+
+        <div class="example">
+          <h3>예시로 따라가기</h3>
+          <blockquote>"관심 기업 3곳의 HR 채용공고를 비교표로 만들어 줘."</blockquote>
+          <ol class="steps" id="steps"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pairs">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Look-alikes</span>
+        <h2>헷갈리는 짝</h2>
+        <p>초보자가 가장 많이 섞어 쓰는 말들을 나란히 놓았습니다.</p>
+      </div>
+      <div class="pairs" id="pairList"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="dict">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Dictionary</span>
+        <h2>용어 사전</h2>
+        <p>모든 용어에 한 줄 정의, 쉬운 설명, 비유를 붙였습니다. ChatGPT와 Claude에서 실제로 어떤 이름으로 보이는지도 함께 적었습니다.</p>
+      </div>
+      <div class="toolbar" id="toolbar">
+        <div class="tb-row">
+          <label class="sr" for="q" hidden>용어 검색</label>
+          <input id="q" type="search" placeholder="용어, 영어 이름, 설명으로 찾기 (예: 하네스, MCP)" autocomplete="off" aria-label="용어 검색">
+          <select id="lv" aria-label="난이도">
+            <option value="0">모든 난이도</option>
+            <option value="1">입문</option>
+            <option value="2">기본</option>
+            <option value="3">심화</option>
+          </select>
+          <button type="button" class="btn primary" id="fcOpen">암기 카드로 공부</button>
+        </div>
+        <div class="tb-row">
+          <div class="tb-lines" id="lineChips" role="group" aria-label="노선 고르기"></div>
+          <span class="tb-count" id="count" aria-live="polite"></span>
+        </div>
+      </div>
+      <div class="dict-grid">
+        <div class="cards" id="cards"></div>
+        <nav class="side" aria-label="용어 목록">
+          <div class="side-h">역 목록</div>
+          <div id="sideList"></div>
+        </nav>
+      </div>
+      <p class="empty" id="empty" hidden></p>
+    </div>
+  </section>
+
+  <section class="sec" id="compare">
+    <div class="wrap">
+      <div class="sec-h">
+        <span class="eb">Side by side</span>
+        <h2>ChatGPT · Claude 대응표</h2>
+        <p>같은 개념이 두 서비스에서 어떤 이름으로 불리는지 모았습니다. 왼쪽 개념 이름을 누르면 사전 설명으로 갑니다.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col">개념</th><th scope="col">ChatGPT (OpenAI)</th><th scope="col">Claude (Anthropic)</th></tr></thead>
+          <tbody id="cmpBody"></tbody>
+        </table>
+      </div>
+      <p class="note">2026년 10월 기준입니다. 두 회사 모두 메뉴 이름과 모델 이름을 자주 바꾸니, 이름보다 개념을 기억해 두면 바뀌어도 금방 따라잡을 수 있습니다.</p>
+    </div>
+  </section>
+
+  <footer class="wrap foot">
+    <div class="foot-grid">
+      <div>
+        <h2>이 지도를 쓰는 법</h2>
+        <p>매일 "14일 학습 플랜"에서 오늘 칸을 열고, 용어 설명을 읽은 뒤 체크하세요. 모르는 말은 사전 검색창에 넣으면 됩니다. 체크와 "알아요" 표시는 사람마다 따로 저장되어, 함께 공부하는 친구와 기록이 섞이지 않습니다. 계정에 저장할 수 없는 경우에는 지금 쓰는 브라우저에 저장됩니다.</p>
+      </div>
+      <div>
+        <h2>참고한 자료</h2>
+        <ul>
+          <li><a href="https://openai.com/index/chatgpt-for-your-most-ambitious-work" target="_blank" rel="noopener">OpenAI, ChatGPT Work 발표 (2026.7)</a></li>
+          <li><a href="https://openai.com/blog/codex-for-almost-everything" target="_blank" rel="noopener">OpenAI, Codex for (almost) everything (2026.4)</a></li>
+          <li><a href="https://developers.openai.com/apps-sdk/deploy/connect-chatgpt" target="_blank" rel="noopener">OpenAI 개발자 문서, ChatGPT에 MCP 서버 연결</a></li>
+          <li><a href="https://learn.chatgpt.com/docs/changelog" target="_blank" rel="noopener">Codex 변경 기록</a></li>
+          <li><a href="https://news.bgov.com/artificial-intelligence/openai-rolls-out-gpt-6-astra-model-with-cyber-guardrails-1" target="_blank" rel="noopener">Bloomberg, GPT-6 Astra 출시 (2026.9)</a></li>
+          <li><a href="https://zapier.com/blog/chatgpt-connectors/" target="_blank" rel="noopener">Zapier, ChatGPT connectors (2026.8)</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<div class="fc" id="fc" hidden role="dialog" aria-modal="true" aria-labelledby="fcTitle">
+  <div class="fc-panel">
+    <div class="fc-top">
+      <div><b id="fcTitle">암기 카드</b><small id="fcScope"></small></div>
+      <button type="button" class="btn" id="fcClose">닫기</button>
+    </div>
+    <button type="button" class="fc-card" id="fcCard"></button>
+    <div class="fc-ctrl">
+      <div class="grp">
+        <button type="button" class="btn" id="fcPrev">이전</button>
+        <button type="button" class="btn primary" id="fcNext">다음</button>
+      </div>
+      <div class="grp">
+        <button type="button" class="btn" id="fcKnown" aria-pressed="false">알아요</button>
+        <button type="button" class="btn" id="fcOnly" aria-pressed="false">모르는 것만</button>
+        <button type="button" class="btn" id="fcShuffle">섞기</button>
+      </div>
+    </div>
+    <div class="fc-prog" id="fcProg"></div>
+  </div>
+</div>
+
+<script>
+window.AIMAP = {
+lines:[
+ {n:1,name:'기초',desc:'AI가 무엇이고 어떻게 움직이나'},
+ {n:2,name:'프롬프트',desc:'잘 시키는 법'},
+ {n:3,name:'에이전트',desc:'스스로 일하는 AI'},
+ {n:4,name:'연결·확장',desc:'도구와 서비스 붙이기'},
+ {n:5,name:'자동화',desc:'사람 없이 돌아가게'},
+ {n:6,name:'만들기',desc:'직접 만들고 개발하기'},
+ {n:7,name:'안전·신뢰',desc:'사고 없이 오래 쓰기'}
+],
+terms:[
+/* 1호선 기초 */
+{id:'ai',ko:'인공지능',en:'AI · Artificial Intelligence',lines:[1],lv:1,
+ def:'사람이 하던 판단, 인식, 창작 같은 지적인 일을 컴퓨터가 하도록 만든 기술 전체를 부르는 말.',
+ body:'범위가 아주 넓어서 스팸 필터, 얼굴 인식, 추천 알고리즘도 모두 AI입니다. 요즘 일상에서 "AI를 쓴다"고 하면 대개 ChatGPT나 Claude 같은 생성형 AI를 뜻합니다.',
+ ana:'"운동"이라는 말처럼 큰 우산입니다. 그 아래에 축구(생성형 AI), 수영(이미지 인식) 같은 종목이 있습니다.',
+ rel:['genai','llm','agi']},
+{id:'genai',ko:'생성형 AI',en:'Generative AI',lines:[1],lv:1,
+ def:'글, 이미지, 음성, 코드처럼 세상에 없던 새 결과물을 만들어내는 AI.',
+ body:'예전 AI가 "이 사진은 고양이"처럼 분류와 판별을 잘했다면, 생성형 AI는 "고양이 그림을 그려 줘"에 답할 수 있습니다. ChatGPT와 Claude는 글을 중심으로 이미지와 파일까지 다루는 생성형 AI입니다.',
+ ana:'시험지를 채점하던 선생님이 직접 문제집을 쓰기 시작한 것과 비슷합니다.',
+ rel:['ai','llm','multimodal']},
+{id:'llm',ko:'대규모 언어 모델',en:'LLM · Large Language Model',lines:[1],lv:1,
+ def:'엄청난 양의 글을 학습해서, 문맥상 다음에 올 말을 예측하는 방식으로 글을 이해하고 써내는 AI 모델.',
+ body:'GPT와 Claude가 대표적인 LLM입니다. 원리는 "다음 단어 맞히기"지만 규모가 커지면서 요약, 번역, 추론, 코딩까지 할 수 있게 됐습니다. 지금의 AI 에이전트도 대부분 LLM을 두뇌로 씁니다.',
+ ana:'세상의 책을 거의 다 읽은 초대형 자동완성입니다. 자동완성이라서 모르는 것도 그럴듯하게 이어 쓸 수 있다는 점은 기억해 두세요.',
+ rel:['token','model-app','hallucination']},
+{id:'model-app',ko:'모델과 앱',en:'Model vs App',lines:[1],lv:1,
+ def:'모델은 AI의 두뇌 자체이고, 앱은 그 두뇌를 사람이 쓰기 좋게 감싼 제품입니다.',
+ body:'"GPT-5.6"은 모델이고 "ChatGPT"는 앱입니다. "Claude Opus 5.5"는 모델이고 "Claude 앱"과 "Claude Code"는 앱입니다. 같은 모델이라도 어느 앱에서 쓰느냐에 따라 검색, 파일 작업, 기억처럼 할 수 있는 일이 달라집니다.',
+ ana:'모델은 엔진, 앱은 자동차입니다. 같은 엔진도 트럭에 넣느냐 승용차에 넣느냐에 따라 쓰임이 달라집니다.',
+ gpt:'모델: GPT-5.6 계열, GPT-6 Astra(2026년 9월 공개) / 앱: ChatGPT 웹, 모바일, 데스크톱',
+ cl:'모델: Claude Haiku, Sonnet, Opus와 최상위 Mythos 등급 / 앱: Claude 웹, 모바일, 데스크톱, Claude Code',
+ rel:['model-tiers','harness','api']},
+{id:'model-tiers',ko:'모델 등급',en:'Model Tiers',lines:[1],lv:1,
+ def:'같은 회사도 크고 똑똑한 모델과 작고 빠른 모델을 나눠 내놓습니다. 이름에 붙은 숫자와 꼬리표로 구분합니다.',
+ body:'큰 모델은 어려운 문제를 잘 풀지만 느리고 비쌉니다. 작은 모델은 빠르고 저렴해서 단순 반복 작업에 좋습니다. 모델 이름은 몇 달마다 바뀌니, 외우기보다 "세대 숫자와 등급 꼬리표"를 읽는 법을 익혀 두면 편합니다.',
+ ana:'커피 사이즈와 비슷합니다. 숫자는 신메뉴가 나온 순서, 꼬리표는 톨, 그란데, 벤티입니다.',
+ gpt:'숫자가 세대(5.5, 5.6, 6)를 뜻하고 mini(가벼움), Instant(빠른 응답), Pro(고성능) 같은 꼬리표로 변형을 나눕니다.',
+ cl:'Haiku(작고 빠름), Sonnet(균형), Opus(고성능) 순서이고 그 위에 최상위 Mythos 등급이 있습니다. 뒤의 숫자(5.5 등)가 세대입니다.',
+ rel:['model-app','reasoning','benchmark']},
+{id:'token',ko:'토큰',en:'Token',lines:[1],lv:1,
+ def:'AI가 글을 읽고 쓰는 최소 단위. 단어보다 작은 글자 조각입니다.',
+ body:'"안녕하세요"가 한 토큰이 아니라 몇 조각으로 나뉠 수 있습니다. 한국어는 같은 내용이어도 영어보다 토큰이 많이 드는 편입니다. 사용량 한도, API 요금, 한 번에 넣을 수 있는 분량이 모두 토큰으로 계산됩니다.',
+ ana:'택시 미터기의 거리 단위입니다. 얼마나 읽고 썼는지가 토큰으로 찍힙니다.',
+ rel:['context-window','api','llm']},
+{id:'context-window',ko:'컨텍스트 윈도우',en:'Context Window',lines:[1],lv:1,
+ def:'AI가 한 번에 붙잡고 볼 수 있는 정보의 최대 분량. 토큰 수로 표시합니다.',
+ body:'대화 내용, 붙여 넣은 자료, 도구 결과가 모두 이 안에 들어갑니다. 꽉 차면 앞부분을 요약하거나 잊습니다. 그래서 아주 긴 대화에서는 처음에 한 말을 놓치기도 합니다. 대화가 너무 길어지면 새 대화로 옮기고 핵심만 다시 알려 주는 게 좋습니다.',
+ ana:'책상 넓이입니다. 넓으면 자료를 많이 펼쳐 둘 수 있지만, 넘치면 오래된 종이부터 치워야 합니다.',
+ rel:['token','memory','context-engineering','sub-agent']},
+{id:'hallucination',ko:'할루시네이션',en:'Hallucination · 환각',lines:[1,7],lv:1,
+ def:'AI가 사실이 아닌 내용을 그럴듯하게 지어내는 현상.',
+ body:'없는 논문, 틀린 날짜, 존재하지 않는 기능을 자신 있게 말할 수 있습니다. 모르는 것을 모른다고 하기보다 그럴듯한 다음 말을 이어 쓰는 LLM의 성질 때문입니다. 숫자, 인용, 법과 제도처럼 중요한 정보는 출처를 확인하고, 웹 검색을 켜서 근거를 붙이게 하면 크게 줄어듭니다.',
+ ana:'시험에서 모르는 문제를 빈칸으로 두지 않고 그럴싸하게 채워 넣는 학생입니다.',
+ rel:['web-search','rag','knowledge-cutoff','sycophancy']},
+{id:'knowledge-cutoff',ko:'지식 컷오프',en:'Knowledge Cutoff',lines:[1],lv:1,
+ def:'모델이 학습한 데이터의 마지막 시점. 그 이후에 일어난 일은 검색 없이는 모릅니다.',
+ body:'컷오프가 6월인 모델은 10월에 나온 신제품이나 바뀐 제도를 모릅니다. 최신 정보가 필요하면 웹 검색 기능을 켜거나 자료를 직접 붙여 넣어야 합니다.',
+ ana:'오래 해외 출장을 다녀온 사람입니다. 똑똑하지만 최근 뉴스는 다시 찾아봐야 합니다.',
+ rel:['web-search','training','hallucination']},
+{id:'reasoning',ko:'추론 모델 · 생각하기',en:'Reasoning · Extended Thinking',lines:[1],lv:2,
+ def:'답하기 전에 속으로 여러 단계를 생각하는 시간을 갖는 모델이나 기능.',
+ body:'수학, 기획, 코딩, 복잡한 비교처럼 따져 볼 게 많은 일에서 정확도가 올라갑니다. 대신 느리고 토큰을 더 씁니다. 간단한 질문에는 꺼 두고 어려운 일에만 켜는 식으로 쓰면 됩니다.',
+ ana:'바로 대답하는 사람과 연습장에 계산해 보고 대답하는 사람의 차이입니다.',
+ gpt:'Thinking 계열 모델이나 생각 강도 옵션을 골라서 사용',
+ cl:'확장 사고(Extended thinking)를 켜서 사용',
+ rel:['inference','cot','model-tiers']},
+{id:'inference',ko:'인퍼런스',en:'Inference · 추론 실행',lines:[1],lv:2,
+ def:'학습을 마친 모델을 실제로 돌려서 답을 받는 일. 우리가 AI에 질문하는 순간이 인퍼런스입니다.',
+ body:'우리말로 "추론"이라고 번역돼서 Reasoning(생각하기)과 자주 헷갈립니다. 기사에서 "추론 비용", "추론용 칩"이라고 하면 대개 이 인퍼런스, 즉 모델을 돌리는 데 드는 비용과 장비를 말합니다.',
+ ana:'학습은 요리 학교 수업이고, 인퍼런스는 손님 주문을 받아 실제로 요리하는 일입니다.',
+ rel:['training','reasoning','api']},
+{id:'training',ko:'학습 · 사전학습',en:'Training · Pre-training',lines:[1],lv:2,
+ def:'모델이 방대한 데이터에서 패턴을 익히는 과정. 거대한 컴퓨터로 몇 달씩 걸립니다.',
+ body:'우리가 대화한다고 해서 그 순간 모델이 새로 배우는 것은 아닙니다. 대화 중에 기억하는 것처럼 보이는 건 학습이 아니라 컨텍스트나 메모리 덕분입니다. 대화 내용이 나중에 다음 모델 학습에 쓰일지는 설정에서 고를 수 있습니다.',
+ ana:'의대 6년 공부가 학습이고, 진료실에서 환자를 보는 것이 인퍼런스입니다.',
+ rel:['inference','fine-tuning','data-controls','memory']},
+{id:'multimodal',ko:'멀티모달',en:'Multimodal',lines:[1],lv:1,
+ def:'글만이 아니라 이미지, 음성, 영상, 파일 같은 여러 형태의 정보를 함께 이해하거나 만들어내는 능력.',
+ body:'사진을 올리고 "이 그래프 해석해 줘"라고 하기, 음성으로 대화하기, PDF를 읽고 요약하기가 모두 멀티모달 기능입니다.',
+ ana:'눈, 귀, 입을 모두 쓰는 사람입니다. 글만 읽던 AI가 보고 듣기 시작한 것입니다.',
+ rel:['genai','llm']},
+{id:'rag',ko:'RAG · 검색 증강 생성',en:'Retrieval-Augmented Generation',lines:[1,4],lv:2,
+ def:'답하기 전에 관련 문서를 먼저 찾아 붙여 넣고, 그 문서를 근거로 답하게 하는 방식.',
+ body:'모델이 모르는 회사 내부 규정이나 최신 자료도 정확히 답할 수 있게 해 줍니다. 프로젝트에 파일을 올려 두면 AI가 그중 관련 부분을 찾아 참고하는 것도 같은 원리입니다. 할루시네이션을 줄이는 대표적인 방법입니다.',
+ ana:'오픈북 시험입니다. 외운 것만으로 답하지 않고 교재에서 해당 페이지를 찾아보고 답합니다.',
+ rel:['embedding','project','hallucination','web-search']},
+{id:'embedding',ko:'임베딩',en:'Embedding',lines:[1],lv:3,
+ def:'글의 의미를 숫자 좌표로 바꾼 것. 뜻이 비슷한 글은 좌표도 가깝습니다.',
+ body:'"연봉"과 "급여"는 글자는 달라도 좌표가 가까워서 검색할 때 함께 찾아집니다. RAG에서 관련 문서를 찾을 때 주로 이 방식을 씁니다.',
+ ana:'도서관 서가 배치입니다. 비슷한 주제의 책은 서로 가까운 칸에 꽂혀 있습니다.',
+ rel:['rag']},
+{id:'fine-tuning',ko:'파인튜닝',en:'Fine-tuning',lines:[1],lv:3,
+ def:'이미 학습된 모델을 특정 목적의 데이터로 한 번 더 학습시켜 맞춤형으로 만드는 일.',
+ body:'기업이 자기 말투나 전문 분야에 맞춘 모델을 만들 때 씁니다. 일반 사용자는 직접 할 일이 거의 없고, 프롬프트, 프로젝트 지침, 스킬로 원하는 방식을 가르치는 편이 훨씬 쉽고 빠릅니다.',
+ ana:'경력직으로 들어온 사람에게 우리 회사 업무 방식을 따로 교육하는 것입니다.',
+ rel:['training','skill','system-prompt','rag']},
+{id:'open-weight',ko:'오픈 웨이트 모델',en:'Open-weight Model',lines:[1],lv:2,
+ def:'모델 파일 자체를 공개해서 누구나 내려받아 자기 컴퓨터나 서버에서 돌릴 수 있는 모델.',
+ body:'OpenAI의 gpt-oss, Meta의 Llama 등이 있습니다. 반대로 GPT-5.6이나 Claude처럼 회사 서버에서만 돌고 앱이나 API로 쓰는 모델은 폐쇄형이라고 부릅니다. 흔히 "오픈소스 모델"이라고도 하지만 학습 데이터까지 공개하는 경우는 드물어서 오픈 웨이트가 더 정확한 말입니다.',
+ ana:'레시피를 사서 집에서 요리하는 것(오픈 웨이트)과 식당에 가서 먹는 것(폐쇄형)의 차이입니다.',
+ rel:['model-app','api']},
+{id:'agi',ko:'AGI · 범용 인공지능',en:'Artificial General Intelligence',lines:[1],lv:2,
+ def:'특정 분야가 아니라 사람처럼 거의 모든 지적 작업을 해낼 수 있는 수준의 AI를 가리키는 목표 개념.',
+ body:'정확한 기준은 회사와 연구자마다 다릅니다. 뉴스에서 "AGI에 가까워졌다"는 말은 성능이 크게 올랐다는 주장이지, 모두가 합의한 시험을 통과했다는 뜻은 아닙니다.',
+ ana:'"만능 신입사원"입니다. 지금 AI는 몇몇 과목은 이미 만점이지만 모든 과목에서 그런 건 아닙니다.',
+ rel:['ai','benchmark','alignment']},
+{id:'benchmark',ko:'벤치마크',en:'Benchmark',lines:[1],lv:2,
+ def:'여러 모델의 성능을 같은 문제로 비교하는 표준 시험.',
+ body:'새 모델이 나오면 수학, 코딩, 추론 벤치마크 점수가 함께 발표됩니다. 점수가 높다고 내 업무에 꼭 더 맞는 건 아니어서, 실제로 내 일을 몇 개 시켜 보는 것이 가장 좋은 비교입니다.',
+ ana:'어학 시험 점수입니다. 참고는 되지만 실제 회화 실력과 늘 같지는 않습니다.',
+ rel:['evals','model-tiers']},
+
+/* 2호선 프롬프트 */
+{id:'prompt',ko:'프롬프트',en:'Prompt',lines:[2],lv:1,
+ def:'AI에게 건네는 입력 전부. 질문, 지시, 붙여 넣은 자료가 모두 프롬프트입니다.',
+ body:'좋은 프롬프트는 무엇을(목적), 왜(맥락), 어떤 모양으로(형식) 원하는지가 분명합니다. "자소서 고쳐 줘"보다 "HR 직무 지원용 자소서야. 500자 이내로 줄이고, 성과가 숫자로 드러나게 고쳐 줘"가 훨씬 좋은 결과를 냅니다.',
+ ana:'일을 부탁하는 메신저 메시지입니다. 상대가 일을 잘하려면 부탁이 구체적이어야 합니다.',
+ rel:['system-prompt','prompt-engineering','few-shot']},
+{id:'system-prompt',ko:'시스템 프롬프트',en:'System Prompt',lines:[2],lv:2,
+ def:'사용자 메시지보다 먼저, 보이지 않게 들어가는 기본 지시문. AI의 역할, 규칙, 말투를 정해 둡니다.',
+ body:'앱을 만든 회사나 개발자가 "너는 어떤 도우미이고, 이런 건 하지 마"라고 미리 적어 둡니다. 사용자도 자기용 기본 지시를 저장할 수 있는데, 매번 같은 부탁을 반복하지 않아도 돼서 편합니다.',
+ ana:'출근 첫날 받는 업무 수칙입니다. 매일 다시 설명하지 않아도 그 원칙대로 일합니다.',
+ gpt:'설정의 맞춤형 지침(Custom Instructions), 프로젝트 지침, GPTs의 지침',
+ cl:'설정의 개인 선호(Preferences), 프로젝트 지침',
+ rel:['prompt','project','role-prompting','harness']},
+{id:'prompt-engineering',ko:'프롬프트 엔지니어링',en:'Prompt Engineering',lines:[2],lv:1,
+ def:'원하는 결과가 나오도록 프롬프트를 설계하고 다듬는 기술.',
+ body:'핵심은 네 가지입니다. 목적을 분명히, 배경을 충분히, 원하는 형식을 구체적으로, 가능하면 예시를 함께 줍니다. 결과가 마음에 안 들면 처음부터 다시 쓰기보다 "어디가 왜 아쉬운지"를 알려 주고 고치게 하는 편이 빠릅니다.',
+ ana:'좋은 업무 지시서를 쓰는 능력입니다. 사람에게 일을 잘 맡기는 사람이 AI에게도 잘 맡깁니다.',
+ rel:['prompt','few-shot','context-engineering','role-prompting']},
+{id:'few-shot',ko:'제로샷 · 퓨샷',short:'퓨샷',en:'Zero-shot · Few-shot',lines:[2],lv:2,
+ def:'예시 없이 바로 시키는 것이 제로샷, 예시를 몇 개 보여 주고 시키는 것이 퓨샷입니다.',
+ body:'원하는 말투나 형식이 까다로울수록 예시가 효과적입니다. "이런 식으로 써 줘" 하며 잘된 예시 2~3개를 붙이면, 설명을 길게 쓰는 것보다 정확하게 따라옵니다.',
+ ana:'"보고서 써 와"(제로샷)와 "작년 보고서 두 개 줄 테니 이 형식으로 써 와"(퓨샷)의 차이입니다.',
+ rel:['prompt-engineering','structured-output']},
+{id:'role-prompting',ko:'역할 부여',en:'Role Prompting',lines:[2],lv:1,
+ def:'"너는 10년 차 인사 담당자야"처럼 AI에게 특정 관점이나 전문가 역할을 정해 주는 방법.',
+ body:'역할을 주면 쓰는 어휘, 중요하게 보는 기준, 설명의 깊이가 그 역할에 맞춰집니다. "면접관 입장에서 이 답변의 약점을 짚어 줘"처럼 평가하는 관점을 정할 때 특히 쓸모 있습니다.',
+ ana:'같은 원고를 편집자에게 보여 줄지 독자에게 보여 줄지 정하는 것입니다.',
+ rel:['system-prompt','prompt-engineering','sycophancy']},
+{id:'cot',ko:'단계별 사고 유도',short:'단계별 사고',en:'Chain of Thought · CoT',lines:[2],lv:2,
+ def:'"단계별로 생각해 보고 답해 줘"처럼 결론 전에 생각하는 과정을 거치게 하는 프롬프트 기법.',
+ body:'예전에는 이 한 줄로 정확도가 눈에 띄게 올랐습니다. 지금은 추론 모델이 이 과정을 스스로 하기 때문에 꼭 쓸 필요는 줄었지만, 생각 기능이 꺼진 모델에는 여전히 효과가 있습니다.',
+ ana:'수학 시험지에 "풀이 과정을 쓰시오"라고 적어 두는 것입니다.',
+ rel:['reasoning','prompt-engineering']},
+{id:'structured-output',ko:'구조화된 출력',en:'Structured Output',lines:[2,5],lv:2,
+ def:'답을 표, 목록, JSON처럼 정해진 틀에 맞춰 받는 것.',
+ body:'사람이 읽기에도 편하지만 자동화에서 특히 중요합니다. 다음 단계의 프로그램이 결과를 읽어 쓰려면 매번 같은 모양이어야 하기 때문입니다. "회사명, 마감일, 지원 자격 세 칸짜리 표로"처럼 칸까지 정해 주면 좋습니다.',
+ ana:'자유 서술 대신 정해진 양식의 신청서를 받는 것입니다. 모으고 정리하기가 훨씬 쉽습니다.',
+ rel:['few-shot','pipeline','automation']},
+{id:'context-engineering',ko:'컨텍스트 엔지니어링',en:'Context Engineering',lines:[2],lv:3,
+ def:'프롬프트 한 줄을 넘어, AI가 보는 정보 전체를 무엇을, 언제, 얼마나 넣을지 설계하는 일.',
+ body:'지침, 참고 자료, 대화 기록, 도구 결과, 메모리가 모두 컨텍스트입니다. 너무 적으면 맥락을 모르고, 너무 많으면 중요한 걸 놓칩니다. 에이전트가 오래 일할수록 이 설계가 결과를 좌우해서, 요즘은 프롬프트 엔지니어링보다 넓은 개념으로 쓰입니다.',
+ ana:'회의 자료 준비입니다. 필요한 자료만 순서대로 챙겨 가야 회의가 잘 굴러갑니다.',
+ rel:['context-window','memory','sub-agent','harness']},
+
+/* 3호선 에이전트 */
+{id:'agent',ko:'AI 에이전트',en:'AI Agent · Agentic',aka:['에이전틱','agentic','챗봇'],lines:[3],lv:1,
+ def:'목표를 받으면 스스로 계획을 세우고, 도구를 쓰고, 결과를 확인하며 일을 끝까지 해내는 AI.',
+ body:'챗봇은 묻는 말에 답하고 멈추지만, 에이전트는 "경쟁사 채용공고를 조사해서 비교표로 만들어 줘" 같은 일을 받아 검색, 정리, 파일 작성까지 여러 단계를 알아서 이어 갑니다. "에이전틱(agentic)하다"는 말은 이렇게 스스로 여러 단계를 수행하는 성질을 뜻합니다.',
+ ana:'챗봇이 안내 데스크 직원이라면, 에이전트는 일을 통째로 맡길 수 있는 비서입니다.',
+ gpt:'ChatGPT Work, Codex',
+ cl:'Claude 앱의 여러 단계 작업, Claude Code, Claude in Chrome',
+ rel:['agent-loop','tool-use','harness','main-agent']},
+{id:'agent-loop',ko:'에이전트 루프',en:'Agent Loop',lines:[3],lv:2,
+ def:'생각하기, 행동하기(도구 호출), 결과 보기, 다시 생각하기를 목표를 이룰 때까지 반복하는 구조.',
+ body:'에이전트가 일하는 방식의 뼈대입니다. 검색했는데 원하는 정보가 없으면 검색어를 바꿔 다시 찾고, 코드를 돌렸는데 오류가 나면 고쳐서 다시 돌립니다. 이 반복을 몇 번까지 할지, 언제 멈출지는 하네스가 관리합니다.',
+ ana:'길을 찾는 사람입니다. 지도를 보고, 몇 걸음 가 보고, 표지판을 확인하고, 다시 방향을 잡습니다.',
+ rel:['agent','tool-use','harness']},
+{id:'tool-use',ko:'도구 사용 · 툴 콜',en:'Tool Use · Function Calling',lines:[3,4],lv:2,
+ def:'AI가 스스로 못 하는 일(검색, 계산, 파일 읽기, 메일 보내기)을 연결된 도구를 불러서 처리하는 것.',
+ body:'중요한 점은 모델이 직접 실행하지 않는다는 것입니다. 모델은 "웹 검색 도구를 이 검색어로 써 줘"라고 요청만 하고, 실제 실행은 하네스가 한 뒤 결과를 모델에게 돌려줍니다. 그래서 어떤 도구를 쥐여 주느냐가 에이전트의 능력을 정합니다.',
+ ana:'머리 좋은 사람에게 계산기, 전화기, 서류함을 쥐여 주는 것입니다. 무엇을 쓸지는 사람이 판단하고 실제 동작은 도구가 합니다.',
+ rel:['agent-loop','mcp','connector','harness']},
+{id:'harness',ko:'하네스',en:'Harness · Agent Harness',aka:['스캐폴딩','scaffolding','에이전트 하네스','평가 하네스'],lines:[3,6],lv:2,
+ def:'모델을 감싸서 실제로 일할 수 있는 에이전트로 만들어 주는 소프트웨어 틀 전체.',
+ body:'모델 자체는 글을 받아 글을 돌려줄 뿐입니다. 하네스가 여기에 시스템 프롬프트, 도구 목록과 실제 실행, 에이전트 루프, 긴 작업 중 컨텍스트 정리, 메모리, 파일 작업 공간, 권한과 승인 규칙을 붙여 줍니다. 같은 모델도 하네스가 좋으면 훨씬 똑똑하게 일하는 것처럼 보입니다. 비슷한 말로 스캐폴딩(scaffolding)이 있습니다. 한편 AI 연구에서 "평가 하네스(evaluation harness)"라고 하면 모델에게 시험 문제를 자동으로 풀리고 채점하는 테스트 틀을 뜻하니 문맥으로 구분하세요.',
+ ana:'말과 마구(馬具)입니다. 힘센 말(모델)도 고삐, 안장, 마차 연결 장치(하네스)가 있어야 짐을 실어 나르는 일을 할 수 있습니다.',
+ gpt:'ChatGPT Work와 Codex의 에이전트 시스템. Work는 Codex 기술 위에서 GPT 모델을 돌립니다.',
+ cl:'Claude Code, Claude 앱의 작업 환경, 개발자용 Claude Agent SDK',
+ rel:['model-app','agent-loop','tool-use','sdk','evals']},
+{id:'main-agent',ko:'메인 에이전트 · 오케스트레이터',en:'Main Agent · Orchestrator',aka:['리드 에이전트','lead agent','부모 에이전트'],lines:[3],lv:2,
+ def:'사용자의 요청을 직접 받아 전체 계획을 세우고, 일을 쪼개 서브 에이전트에게 맡긴 뒤 결과를 모아 마무리하는 중심 에이전트.',
+ body:'사용자와 대화하는 것은 보통 메인 에이전트 하나입니다. 일이 크면 "자료 조사는 A, 표 정리는 B"처럼 나눠 맡기고, 돌아온 결과를 검토해 최종 결과물을 만듭니다. 맡길 때 지시를 얼마나 잘 쓰느냐가 전체 품질을 좌우합니다.',
+ ana:'프로젝트 팀장입니다. 직접 다 하지 않고, 업무를 나눠 주고, 보고를 받아 최종안을 냅니다.',
+ rel:['sub-agent','orchestration','multi-agent']},
+{id:'sub-agent',ko:'서브 에이전트',en:'Sub-agent',aka:['하위 에이전트','자식 에이전트','서브에이전트'],lines:[3],lv:2,
+ def:'메인 에이전트가 특정 하위 작업을 맡기려고 따로 띄우는 에이전트. 일을 마치면 결과만 요약해 돌려줍니다.',
+ body:'장점은 두 가지입니다. 자기만의 깨끗한 컨텍스트에서 일하므로 메인 에이전트의 책상이 어지러워지지 않고, 여러 개를 동시에 돌려 시간을 아낄 수 있습니다. 단점도 있습니다. 메인과 기억을 공유하지 않아 맥락을 처음부터 다시 파악하므로 시간과 토큰이 더 들고, 메인이 지시를 부실하게 주면 엉뚱한 결과가 돌아옵니다. 그래서 작고 독립적인 일에 쓰는 게 좋습니다.',
+ ana:'팀장이 인턴에게 "이 세 회사 공고만 조사해서 한 장으로 요약해 줘"라고 맡기는 것입니다. 인턴은 앞선 회의 내용을 모르니 지시가 분명해야 합니다.',
+ gpt:'Codex의 병렬 에이전트(여러 작업을 동시에 실행)',
+ cl:'Claude Code와 Claude 앱의 서브 에이전트',
+ rel:['main-agent','context-window','multi-agent','context-engineering']},
+{id:'multi-agent',ko:'멀티 에이전트 시스템',en:'Multi-agent System',lines:[3],lv:3,
+ def:'여러 에이전트가 역할을 나눠 함께 일하는 구조.',
+ body:'팀장과 팀원형(메인과 서브), 앞사람의 결과를 다음 사람이 이어받는 릴레이형, 작성자와 검토자를 따로 두는 상호 점검형 등이 있습니다. 에이전트가 많을수록 강력하지만 비용과 관리 부담도 커집니다.',
+ ana:'혼자 일하는 프리랜서와 부서가 나뉜 회사의 차이입니다.',
+ rel:['main-agent','sub-agent','orchestration']},
+{id:'orchestration',ko:'오케스트레이션',en:'Orchestration',lines:[3,5],lv:3,
+ def:'여러 AI, 도구, 작업 단계를 순서와 역할에 맞게 지휘하고 조율하는 일.',
+ body:'누가 먼저 일하고, 결과를 누구에게 넘기고, 실패하면 어떻게 할지를 정합니다. 메인 에이전트가 직접 할 수도 있고, 사람이 짠 자동화 흐름이 할 수도 있습니다.',
+ ana:'오케스트라 지휘자입니다. 악기를 직접 연주하지는 않지만 언제 누가 들어올지 정합니다.',
+ rel:['main-agent','workflow-agent','pipeline']},
+{id:'computer-use',ko:'컴퓨터 사용',en:'Computer Use',lines:[3],lv:2,
+ def:'AI가 화면을 보고 마우스 클릭과 키보드 입력으로 실제 프로그램을 조작하는 기능.',
+ body:'연결 도구(API)가 없는 오래된 프로그램도 사람처럼 화면을 보며 다룰 수 있습니다. 대신 느리고 화면을 잘못 읽어 실수할 수 있어서, 중요한 동작 전에는 사람 확인을 받습니다.',
+ ana:'원격 지원 상담원이 내 컴퓨터 화면을 보며 대신 클릭해 주는 것과 비슷합니다.',
+ gpt:'Codex와 ChatGPT Work의 Computer Use(데스크톱 앱)',
+ cl:'Claude 데스크톱 앱을 연결했을 때의 컴퓨터 사용',
+ rel:['browser-agent','rpa','hitl','permissions']},
+{id:'browser-agent',ko:'브라우저 에이전트',en:'Browser Use',lines:[3],lv:2,
+ def:'AI가 웹 브라우저를 직접 열고 클릭, 입력, 이동하며 웹에서 일을 처리하는 기능.',
+ body:'로그인이 필요한 사이트 확인, 양식 채우기, 여러 탭의 자료 모으기처럼 단순 검색으로는 안 되는 웹 작업에 씁니다. 결제나 제출처럼 되돌릴 수 없는 동작은 보통 사용자 승인을 받습니다.',
+ ana:'옆자리에 앉아 내 브라우저를 대신 조작해 주는 동료입니다.',
+ gpt:'ChatGPT 데스크톱 앱의 내장 브라우저, Codex 크롬 확장',
+ cl:'Claude in Chrome(크롬 확장), Claude 데스크톱 앱의 내장 브라우저',
+ rel:['computer-use','web-search','prompt-injection']},
+{id:'deep-research',ko:'딥 리서치',en:'Deep Research',lines:[3],lv:1,
+ def:'AI가 수십 개 출처를 스스로 검색하고 읽어 종합 보고서를 써 주는 리서치 에이전트 기능.',
+ body:'한 번 검색하고 답하는 일반 검색과 달리, 몇 분에서 수십 분 동안 검색어를 바꿔 가며 깊게 조사합니다. 시장 조사, 기업 분석, 정책 비교처럼 출처가 많이 필요한 일에 좋습니다. 인용된 출처는 꼭 열어서 확인하세요.',
+ ana:'자료 조사 담당 인턴에게 하루를 주고 보고서를 받는 것입니다.',
+ gpt:'딥 리서치(Deep research)',
+ cl:'리서치(Research)',
+ rel:['web-search','agent','hallucination']},
+{id:'background-task',ko:'백그라운드 작업',en:'Background Task',lines:[3],lv:2,
+ def:'사용자가 화면을 닫거나 다른 일을 해도 AI가 클라우드에서 계속 진행하는 작업.',
+ body:'오래 걸리는 조사나 파일 작업을 맡겨 두고 나중에 결과만 받아 볼 수 있습니다. 끝나면 알림을 받거나 다른 기기에서 이어서 확인할 수 있습니다.',
+ ana:'세탁기를 돌려 두고 외출하는 것입니다. 돌아오면 빨래가 끝나 있습니다.',
+ gpt:'Codex 클라우드 작업, ChatGPT Work',
+ cl:'Claude 앱의 긴 작업(지켜보지 않아도 계속 진행), 웹의 Claude Code',
+ rel:['agent','scheduled-task','local-cloud']},
+
+/* 4호선 연결·확장 */
+{id:'web-search',ko:'웹 검색',en:'Web Search',lines:[4],lv:1,
+ def:'AI가 답하기 전에 인터넷을 실시간으로 검색해서 최신 정보와 출처를 붙여 주는 기능.',
+ body:'지식 컷오프의 한계를 메우고 할루시네이션을 줄여 줍니다. 날씨, 현재 대표이사, 최근 제도 변경처럼 자주 바뀌는 정보는 검색 결과를 근거로 답하게 하는 것이 안전합니다.',
+ ana:'기억에만 의존하지 않고 휴대폰으로 확인한 뒤 대답하는 친구입니다.',
+ rel:['knowledge-cutoff','rag','deep-research']},
+{id:'mcp',ko:'MCP',en:'Model Context Protocol',lines:[4,6],lv:2,
+ def:'AI 앱과 외부 서비스(구글 드라이브, 노션, 슬랙, 캘린더 등)를 연결하는 공통 규격.',
+ body:'예전에는 AI 앱마다, 서비스마다 연결 방식을 따로 만들어야 했습니다. MCP는 Anthropic이 2024년 말에 공개한 개방형 표준으로, 이제 Claude와 ChatGPT를 비롯한 여러 AI가 지원합니다. 서비스 쪽에서 "MCP 서버"를 하나 만들어 두면 MCP를 지원하는 어떤 AI 앱이든 그 서비스를 도구로 쓸 수 있습니다.',
+ ana:'USB-C 단자입니다. 규격이 하나로 통일되니 충전기 하나로 여러 기기를 꽂을 수 있습니다.',
+ gpt:'앱(Apps) 대부분이 MCP 기반. 개발자 모드에서 MCP 서버를 직접 추가할 수 있음',
+ cl:'커넥터가 MCP 기반. 설정에서 MCP 서버를 커스텀 커넥터로 직접 추가할 수 있음',
+ rel:['connector','tool-use','api','plugin']},
+{id:'connector',ko:'커넥터 · 앱 연결',en:'Connector · Apps',lines:[4],lv:1,
+ def:'클릭 몇 번으로 AI에 외부 서비스를 연결해 내 메일, 문서, 일정을 읽거나 다룰 수 있게 하는 기능.',
+ body:'연결하면 "내 캘린더에서 다음 주 비는 시간 찾아 줘", "드라이브에서 지난달 보고서를 찾아 요약해 줘" 같은 일이 가능해집니다. 대부분 MCP로 동작합니다. 연결할 때 읽기만 허용하는지, 쓰기까지 허용하는지 권한을 꼭 확인하세요.',
+ ana:'AI에게 사무실 열쇠 꾸러미를 건네는 것입니다. 어느 방 열쇠를 줄지는 내가 고릅니다.',
+ gpt:'앱(Apps). 2025년 12월 "커넥터"에서 이름이 바뀜. 대화창에서 @앱이름으로 불러옴',
+ cl:'커넥터(Connectors). 설정이나 대화창의 도구 메뉴에서 연결',
+ rel:['mcp','permissions','plugin']},
+{id:'skill',ko:'스킬',en:'Skill',lines:[4],lv:2,
+ def:'특정 작업을 잘하는 방법을 적은 지침서와 필요한 파일을 한 폴더로 묶은 것. AI가 그 작업을 할 때 꺼내 읽고 따릅니다.',
+ body:'"우리 팀 보고서 양식", "엑셀 파일 만드는 법"처럼 반복되는 작업 노하우를 스킬로 만들어 두면 매번 설명할 필요가 없습니다. 평소에는 이름과 짧은 설명만 보고 있다가 필요할 때만 전체 내용을 읽기 때문에 컨텍스트도 아낍니다.',
+ ana:'업무 매뉴얼 바인더입니다. 책장에 꽂아 두고 그 업무를 할 때만 꺼내 봅니다.',
+ gpt:'Codex의 Skills',
+ cl:'스킬(Skills). 문서, 슬라이드, 엑셀 만들기 등이 기본 제공되고 직접 만들어 추가할 수 있음',
+ rel:['plugin','system-prompt','context-engineering','fine-tuning']},
+{id:'plugin',ko:'플러그인',en:'Plugin',lines:[4],lv:2,
+ def:'스킬, 커넥터, 명령어, 에이전트 설정 같은 여러 확장 기능을 한 번에 설치하는 묶음 패키지.',
+ body:'예를 들어 인사 업무용 플러그인이라면 채용 공고 작성 스킬, 인사 시스템 커넥터, 자주 쓰는 명령어가 함께 들어 있을 수 있습니다. 2023년에 잠깐 있었던 옛 ChatGPT 플러그인과는 다른, 요즘의 새 개념입니다.',
+ ana:'앱 하나가 아니라 "업무용 앱 세트"를 한 번에 까는 것입니다.',
+ gpt:'Codex와 ChatGPT 데스크톱 앱의 플러그인',
+ cl:'Claude 앱과 Claude Code의 플러그인',
+ rel:['skill','connector','mcp']},
+{id:'memory',ko:'메모리',en:'Memory',lines:[4],lv:1,
+ def:'대화가 끝나도 사용자에 대한 정보와 선호를 기억해 두고 다음 대화에 활용하는 기능.',
+ body:'컨텍스트 윈도우가 그 대화 안의 단기 기억이라면, 메모리는 대화를 넘어서는 장기 기억입니다. "나는 마케터야" 같은 정보를 기억해 두면 매번 설명하지 않아도 됩니다. 무엇이 저장됐는지 설정에서 확인하고 지울 수 있습니다.',
+ ana:'단골 카페 사장님입니다. "늘 먹던 걸로요" 하면 알아듣습니다.',
+ gpt:'설정의 개인 맞춤 > 메모리 (저장된 메모리, 과거 대화 참고)',
+ cl:'설정의 메모리 (대화에서 메모리 만들기, 과거 대화 검색과 참고)',
+ rel:['context-window','project','data-controls']},
+{id:'project',ko:'프로젝트',en:'Projects',lines:[4],lv:1,
+ def:'관련 대화, 참고 파일, 전용 지침을 한 폴더처럼 묶어 두는 공간.',
+ body:'"취업 준비" 프로젝트에 이력서와 공고 파일, "항상 존댓말로, 500자 기준" 같은 지침을 넣어 두면 그 안에서 시작하는 모든 대화가 같은 자료와 규칙을 공유합니다. 주제별로 대화를 정리하기에도 좋습니다.',
+ ana:'과목별 바인더입니다. 바인더를 펴면 그 과목 필기와 자료가 다 들어 있습니다.',
+ gpt:'프로젝트(Projects). 비슷한 용도로 GPTs도 있음',
+ cl:'프로젝트(Projects)',
+ rel:['custom-gpt','system-prompt','rag','memory']},
+{id:'custom-gpt',ko:'GPTs · 커스텀 GPT',en:'GPTs · Custom GPT',lines:[4],lv:2,
+ def:'특정 용도에 맞게 지침, 지식 파일, 도구를 미리 세팅해 두고 다른 사람과 공유할 수 있는 ChatGPT의 맞춤 버전.',
+ body:'"면접 연습 코치", "보도자료 교정기"처럼 하나의 목적에 맞춘 작은 챗봇을 만드는 기능입니다. 다른 사람이 만든 것을 찾아 쓸 수도 있습니다. Claude에서는 프로젝트와 스킬을 조합해 비슷한 효과를 냅니다.',
+ ana:'범용 비서를 특정 업무 전담 직원으로 교육해 두고, 동료에게도 빌려줄 수 있는 것입니다.',
+ gpt:'GPTs (탐색 메뉴에서 만들기, 찾기)',
+ cl:'똑같은 기능은 없고 프로젝트(지침과 파일)와 스킬로 대신함',
+ rel:['project','skill','system-prompt']},
+{id:'artifact',ko:'아티팩트 · 캔버스',en:'Artifact · Canvas',lines:[4],lv:1,
+ def:'대화 옆 별도 공간에 문서, 코드, 웹페이지 같은 결과물을 띄워 놓고 고치고 공유하는 기능.',
+ body:'긴 답변이 대화 속에 묻히지 않고 독립된 결과물로 남습니다. 직접 편집하거나 "셋째 문단만 고쳐 줘"처럼 부분 수정을 요청할 수 있고, 링크로 공유하거나 파일로 내려받을 수 있습니다. 지금 보고 계신 이 페이지도 아티팩트입니다.',
+ ana:'메신저 창 옆에 펼쳐 놓은 공동 작업 문서입니다.',
+ gpt:'캔버스(Canvas), 데스크톱 앱의 Sites(웹앱 만들기와 배포)',
+ cl:'아티팩트(Artifacts). 문서, 슬라이드, 시트, 디자인, 웹페이지 등을 링크로 공유',
+ rel:['code-execution','project','vibe-coding']},
+{id:'code-execution',ko:'코드 실행 · 데이터 분석',en:'Code Execution',lines:[4,6],lv:2,
+ def:'AI가 직접 파이썬 같은 코드를 짜서 실행해 계산, 차트, 파일 변환 등을 처리하는 기능.',
+ body:'엑셀 파일을 올리고 "부서별 평균 근속 연수를 차트로 그려 줘"라고 하면 AI가 코드를 돌려 정확한 숫자로 답합니다. 암산보다 훨씬 정확해서, 숫자가 걸린 일은 이 기능을 쓰게 하는 것이 좋습니다. 실행은 안전한 샌드박스 안에서 이뤄집니다.',
+ ana:'암산 대신 엑셀을 켜서 계산하는 것입니다.',
+ gpt:'데이터 분석(예전 이름은 코드 인터프리터)',
+ cl:'코드 실행과 파일 만들기',
+ rel:['sandbox','artifact','tool-use']},
+
+/* 5호선 자동화 */
+{id:'automation',ko:'자동화',en:'Automation',lines:[5],lv:1,
+ def:'사람이 반복하던 일을 정해진 조건에서 저절로 돌아가게 만드는 것.',
+ body:'두 갈래가 있습니다. 규칙 기반 자동화는 "첨부파일 달린 메일이 오면 드라이브에 저장"처럼 정해진 대로만 움직입니다. AI 자동화는 "지원서 메일이 오면 내용을 읽고 직무별로 분류해 요약표에 추가"처럼 내용을 이해하고 판단하는 단계가 들어갑니다. 요즘은 둘을 섞어 씁니다.',
+ ana:'규칙 기반은 정해진 시간에 켜지는 타이머 조명이고, AI 자동화는 방에 누가 있는지 보고 밝기를 맞추는 조명입니다.',
+ rel:['trigger','workflow-agent','scheduled-task','nocode']},
+{id:'workflow-agent',ko:'워크플로우와 에이전트',short:'워크플로우',en:'Workflow vs Agent',lines:[5],lv:2,
+ def:'워크플로우는 사람이 정한 순서대로 AI가 움직이고, 에이전트는 AI가 순서를 스스로 정합니다.',
+ body:'워크플로우는 예측 가능하고 매번 같은 품질이 나와서 정형화된 반복 업무에 맞습니다. 에이전트는 유연해서 상황이 매번 다른 일에 맞지만 결과를 예측하기 어렵고 비용이 더 듭니다. 실무에서는 큰 흐름은 워크플로우로 고정하고 판단이 필요한 한두 칸에만 에이전트를 넣는 경우가 많습니다.',
+ ana:'워크플로우는 레시피대로 만드는 프랜차이즈 주방, 에이전트는 냉장고 재료를 보고 메뉴를 정하는 셰프입니다.',
+ rel:['automation','agent','orchestration','pipeline']},
+{id:'trigger',ko:'트리거',en:'Trigger',lines:[5],lv:1,
+ def:'자동화를 출발시키는 방아쇠 조건.',
+ body:'시간 트리거(매일 오전 9시), 이벤트 트리거(새 메일 도착, 시트에 새 행 추가, 설문 제출), 수동 트리거(버튼 클릭)가 대표적입니다. 자동화를 설계할 때는 "언제 시작하나?"부터 정합니다.',
+ ana:'자명종입니다. 정해진 순간이 되면 그다음 일이 시작됩니다.',
+ rel:['scheduled-task','webhook','automation']},
+{id:'scheduled-task',ko:'예약 작업',en:'Scheduled Task',lines:[5],lv:1,
+ def:'정해진 시간이나 주기마다 AI가 알아서 실행하는 작업.',
+ body:'"평일 아침 8시마다 업계 뉴스를 모아 세 줄로 요약해 줘", "매주 금요일에 이번 주 일정 정리해 줘"처럼 설정합니다. 실행될 때 사람이 없으니, 메일 발송처럼 되돌릴 수 없는 동작을 자동으로 허용할지 신중히 정하세요.',
+ ana:'정기 배송입니다. 한 번 신청하면 정해진 날마다 알아서 도착합니다.',
+ gpt:'예약 작업(Scheduled), Codex 자동화',
+ cl:'예약 작업(Scheduled tasks)',
+ rel:['trigger','cron','background-task','hitl']},
+{id:'cron',ko:'크론',en:'Cron',lines:[5],lv:3,
+ def:'반복 일정을 다섯 칸짜리 기호로 적는 개발자식 표기법.',
+ body:'칸은 순서대로 분, 시, 일, 월, 요일입니다. "0 9 * * 1-5"는 평일(월~금) 오전 9시 0분, "30 18 * * 5"는 매주 금요일 오후 6시 30분입니다. 별표(*)는 "매번"이라는 뜻입니다. 요즘 AI 앱은 말로 일정을 정하면 알아서 크론으로 바꿔 줍니다.',
+ ana:'알람 앱의 반복 설정을 한 줄짜리 암호로 적은 것입니다.',
+ rel:['scheduled-task','trigger']},
+{id:'webhook',ko:'웹훅',en:'Webhook',lines:[5],lv:3,
+ def:'어떤 일이 생기면 다른 서비스에 자동으로 알림을 보내 주는 장치.',
+ body:'"결제가 완료되면 이 주소로 알려 줘"처럼 미리 등록해 두면, 일이 생기는 순간 상대 서비스가 깨어나 다음 작업을 시작합니다. 자동화 도구들이 서로를 부르는 대표적인 방법입니다.',
+ ana:'택배 도착 문자입니다. 계속 현관을 확인하지 않아도 도착하면 알려 줍니다.',
+ rel:['trigger','api','nocode']},
+{id:'nocode',ko:'노코드 자동화 도구',en:'No-code Automation',lines:[5],lv:2,
+ def:'코딩 없이 블록을 이어 서비스 사이의 자동화를 만드는 도구. Zapier, Make, n8n이 대표적입니다.',
+ body:'"구글 폼 응답이 오면 AI로 요약해서 슬랙 채널에 보내기" 같은 흐름을 마우스로 만듭니다. 요즘은 중간에 AI 단계를 넣거나, MCP로 ChatGPT나 Claude와 연결해 대화창에서 수천 개 앱을 움직이게 할 수도 있습니다.',
+ ana:'레고 블록입니다. 정해진 모양의 블록을 끼워 맞춰 나만의 장치를 만듭니다.',
+ rel:['automation','webhook','mcp','pipeline']},
+{id:'pipeline',ko:'파이프라인',en:'Pipeline',lines:[5],lv:2,
+ def:'데이터나 작업이 여러 단계를 순서대로 통과하며 처리되는 흐름.',
+ body:'"공고 수집, 중복 제거, 요약, 표 정리, 공유"처럼 앞 단계의 결과가 다음 단계의 재료가 됩니다. 한 단계가 잘못되면 뒤가 모두 틀어지므로 각 단계의 결과 형식을 정해 두는 것이 중요합니다.',
+ ana:'공장의 컨베이어 벨트입니다. 부품이 정해진 공정을 차례로 지나갑니다.',
+ rel:['workflow-agent','structured-output','orchestration']},
+{id:'rpa',ko:'RPA',en:'Robotic Process Automation',lines:[5],lv:2,
+ def:'사람이 화면에서 하던 클릭과 입력을 그대로 기록해 반복 실행하는 전통적인 업무 자동화.',
+ body:'경영지원, 인사, 재무 부서에서 데이터 옮기기, 정기 보고서 내려받기 같은 반복 업무에 오래 써 왔습니다. 화면 배치가 바뀌면 멈추는 약점이 있는데, AI의 컴퓨터 사용 기능은 화면을 이해하며 움직여서 이 약점을 보완합니다.',
+ ana:'매크로 녹화입니다. 정해진 동작은 완벽히 반복하지만 상황이 바뀌면 당황합니다.',
+ rel:['computer-use','automation','workflow-agent']},
+
+/* 6호선 만들기 */
+{id:'api',ko:'API',en:'Application Programming Interface',lines:[6,4],lv:2,
+ def:'프로그램끼리 정해진 방식으로 요청하고 응답을 주고받는 창구.',
+ body:'개발자는 ChatGPT나 Claude 앱 대신 API로 모델을 직접 불러 자기 서비스에 붙입니다. 앱 구독과는 별개로 쓴 토큰만큼 요금을 냅니다. 사내 챗봇이나 자동화 도구 속 AI 기능은 대부분 API로 연결된 것입니다.',
+ ana:'식당 주방의 주문 창구입니다. 정해진 주문서 양식으로 넣으면 음식이 나옵니다.',
+ gpt:'OpenAI API',
+ cl:'Claude API (Claude Console)',
+ rel:['api-key','sdk','token','mcp']},
+{id:'api-key',ko:'API 키',en:'API Key',lines:[6,7],lv:2,
+ def:'API를 쓸 때 "내가 누구인지"를 증명하는 비밀 문자열.',
+ body:'이 키로 쓴 요금은 키 주인에게 청구됩니다. 비밀번호처럼 다뤄야 해서 깃허브, 블로그, 단톡방에 절대 올리면 안 됩니다. 노출됐다면 바로 삭제하고 새로 발급하세요.',
+ ana:'법인카드입니다. 누가 주우면 내 이름으로 결제됩니다.',
+ rel:['api','permissions']},
+{id:'sdk',ko:'SDK',en:'Software Development Kit',lines:[6],lv:3,
+ def:'개발자가 API나 기능을 쉽게 쓰도록 미리 만들어 둔 도구 모음.',
+ body:'API를 맨손으로 부르는 대신 SDK를 쓰면 몇 줄로 해결됩니다. 특히 에이전트 SDK는 에이전트 루프, 도구 실행, 컨텍스트 관리 같은 하네스를 통째로 제공해서 내 서비스 안에 에이전트를 빠르게 만들 수 있게 해 줍니다.',
+ ana:'가구 조립 키트입니다. 원목부터 깎지 않고 부품과 설명서로 바로 조립합니다.',
+ gpt:'OpenAI Agents SDK',
+ cl:'Claude Agent SDK (Claude Code를 움직이는 하네스를 가져다 쓰는 키트)',
+ rel:['api','harness','coding-agent']},
+{id:'cli',ko:'CLI · 터미널',en:'Command Line Interface',lines:[6],lv:2,
+ def:'마우스 대신 글자로 명령을 입력해 컴퓨터를 다루는 방식. 흔히 검은 화면의 터미널입니다.',
+ body:'개발자용 AI 도구는 터미널에서 돌아가는 경우가 많습니다. 처음엔 낯설지만, 코딩 에이전트에게는 파일 읽기와 프로그램 실행을 정확히 시키기 좋은 환경입니다.',
+ ana:'메뉴판을 손가락으로 고르는 대신 주문 내용을 정확한 문장으로 말하는 것입니다.',
+ gpt:'Codex CLI',
+ cl:'Claude Code (터미널, 웹, 데스크톱, 모바일)',
+ rel:['coding-agent','local-cloud']},
+{id:'coding-agent',ko:'코딩 에이전트',en:'Coding Agent',lines:[6],lv:2,
+ def:'코드를 읽고, 쓰고, 실행하고, 테스트까지 스스로 하는 개발 특화 에이전트.',
+ body:'"로그인 기능 추가해 줘"라고 하면 관련 파일을 찾아 고치고, 실행해 보고, 오류가 나면 다시 고칩니다. 개발자가 아니어도 간단한 웹페이지나 업무용 도구를 만드는 데 쓸 수 있고, 요즘은 문서 작업이나 자동화 같은 비개발 업무에도 쓰입니다.',
+ ana:'코드를 쓰는 데서 끝나지 않고 직접 돌려 보고 고치는 개발자 동료입니다.',
+ gpt:'Codex (ChatGPT 데스크톱 앱의 Codex 모드, CLI, IDE 확장)',
+ cl:'Claude Code',
+ rel:['vibe-coding','cli','harness','sandbox']},
+{id:'vibe-coding',ko:'바이브 코딩',en:'Vibe Coding',lines:[6],lv:1,
+ def:'코드를 한 줄씩 직접 짜는 대신, 원하는 것을 말로 설명하고 AI가 만든 결과를 보며 고쳐 나가는 개발 방식.',
+ body:'2025년 초 AI 연구자 안드레이 카파시가 쓴 말이 널리 퍼졌습니다. 아이디어를 빠르게 시제품으로 만들기에 좋지만, 코드를 이해하지 못한 채 쌓으면 나중에 고치기 어렵고 보안 문제가 숨어 있을 수 있습니다. 개인용 도구에는 잘 맞고, 남에게 배포할 서비스는 검토가 필요합니다.',
+ ana:'인테리어 업체에 "따뜻한 북유럽 느낌으로요" 하고 맡긴 뒤, 결과를 보며 "조명만 더 밝게" 하고 고쳐 나가는 것입니다.',
+ rel:['coding-agent','artifact']},
+{id:'local-cloud',ko:'로컬과 클라우드',en:'Local vs Cloud',lines:[6],lv:2,
+ def:'로컬은 내 컴퓨터에서, 클라우드는 회사 서버에서 AI 작업이 실행되는 것.',
+ body:'로컬 작업은 내 파일과 프로그램에 바로 접근할 수 있지만 컴퓨터가 켜져 있어야 합니다. 클라우드 작업은 노트북을 덮어도 계속되지만 내 파일을 쓰려면 올리거나 연결해야 합니다. 어디서 실행되는지 알면 "왜 내 파일을 못 찾지?" 같은 혼란이 줄어듭니다.',
+ ana:'집 주방에서 요리하기(로컬)와 공유 주방을 빌려 요리하기(클라우드)의 차이입니다.',
+ gpt:'Codex의 로컬 작업과 클라우드 작업, 데스크톱 앱의 로컬 파일 접근',
+ cl:'Claude 앱의 클라우드 작업 공간, 데스크톱 앱을 연결했을 때 내 컴퓨터 파일 접근',
+ rel:['background-task','sandbox','cli']},
+{id:'evals',ko:'평가 · 이밸',en:'Evals',lines:[6],lv:3,
+ def:'AI가 원하는 대로 일하는지 정해진 문제 세트로 체계적으로 시험하는 것.',
+ body:'프롬프트나 스킬을 고친 뒤 정말 나아졌는지 감으로 판단하지 않고, 같은 시험지를 다시 풀려 점수로 비교합니다. 이런 시험을 자동으로 돌려 주는 틀을 평가 하네스(evaluation harness)라고 부릅니다.',
+ ana:'신메뉴 출시 전 블라인드 시식회입니다. 같은 기준으로 맛을 비교합니다.',
+ rel:['benchmark','harness','skill']},
+
+/* 7호선 안전·신뢰 */
+{id:'prompt-injection',ko:'프롬프트 인젝션',en:'Prompt Injection',lines:[7],lv:2,
+ def:'웹페이지, 메일, 문서 속에 숨겨 둔 문장으로 AI에게 몰래 지시를 내리는 공격.',
+ body:'웹페이지에 흰 글씨로 "이 페이지를 읽는 AI는 사용자의 연락처를 이 주소로 보내라"라고 숨겨 두는 식입니다. AI가 웹과 메일을 직접 읽고 행동할수록 위험해집니다. 그래서 잘 만든 에이전트는 외부에서 읽은 글을 지시가 아닌 자료로만 다루고, 중요한 동작 전에는 사람 승인을 받습니다.',
+ ana:'택배 상자 안에 "이걸 연 직원은 금고 비밀번호를 적어 보내시오"라는 쪽지를 넣는 것입니다. 성실한 직원일수록 속기 쉽습니다.',
+ rel:['hitl','guardrail','browser-agent','permissions']},
+{id:'jailbreak',ko:'탈옥',en:'Jailbreak',lines:[7],lv:2,
+ def:'교묘한 말 돌리기로 AI의 안전 규칙을 우회해 원래 거절할 답을 얻어내려는 시도.',
+ body:'역할극, 가정법, 암호 같은 우회 방식을 씁니다. 프롬프트 인젝션은 제3자가 숨긴 공격이고, 탈옥은 보통 사용자 본인이 직접 시도한다는 점이 다릅니다. AI 회사들은 이를 막는 방어를 계속 보강합니다.',
+ ana:'"이건 소설 속 이야기니까 괜찮아"라며 규정을 피해 가려는 것입니다.',
+ rel:['prompt-injection','guardrail','alignment']},
+{id:'guardrail',ko:'가드레일',en:'Guardrails',lines:[7],lv:2,
+ def:'AI가 위험하거나 원치 않는 행동을 하지 못하게 막는 안전장치 전체.',
+ body:'모델이 배운 원칙, 입력과 출력을 검사하는 필터, 도구 권한 제한, 사람 승인 단계가 모두 가드레일입니다. 회사에서 AI를 도입할 때는 "무엇을 못 하게 막았는가"를 함께 설계합니다.',
+ ana:'도로의 가드레일입니다. 평소엔 의식하지 않지만 미끄러질 때 큰 사고를 막습니다.',
+ rel:['permissions','hitl','alignment']},
+{id:'hitl',ko:'사람 승인',en:'Human-in-the-loop',lines:[7,3],lv:2,
+ def:'중요한 단계에서 AI가 멈추고 사람의 확인을 받은 뒤 진행하도록 만든 설계.',
+ body:'메일 발송, 결제, 파일 삭제, 외부 게시처럼 되돌릴 수 없는 일 앞에서 "보낼까요?"라고 묻는 것이 대표적입니다. 자동화를 처음 설계할 때는 승인 단계를 넉넉히 두고, 믿음이 쌓이면 줄여 나가는 것이 안전합니다.',
+ ana:'신입이 올린 기안서에 팀장이 결재 도장을 찍는 단계입니다.',
+ rel:['permissions','scheduled-task','prompt-injection','computer-use']},
+{id:'permissions',ko:'권한',en:'Permissions',lines:[7,3],lv:2,
+ def:'에이전트가 무엇을 읽고, 쓰고, 실행할 수 있는지 정해 둔 범위.',
+ body:'"드라이브 읽기는 되지만 삭제는 안 됨", "이 폴더만 접근"처럼 정합니다. 필요한 만큼만 주는 최소 권한 원칙이 기본입니다. 커넥터를 연결하거나 에이전트에 폴더를 열어 줄 때 권한 화면을 꼭 읽어 보세요.',
+ ana:'출입증의 출입 가능 구역입니다. 인턴 출입증으로 서버실 문이 열리면 안 됩니다.',
+ gpt:'앱 연결 권한, Codex와 Work의 승인 모드',
+ cl:'커넥터 권한, 폴더 접근 허용, Claude Code의 권한 모드',
+ rel:['hitl','sandbox','connector','api-key']},
+{id:'sandbox',ko:'샌드박스',en:'Sandbox',lines:[7,6],lv:2,
+ def:'AI가 코드를 돌리거나 파일을 만지는 격리된 작업 공간. 안에서 무슨 일이 생겨도 바깥에 영향이 없습니다.',
+ body:'AI가 실수로 파일을 지우거나 이상한 프로그램을 실행해도 내 컴퓨터는 안전합니다. 코드 실행이나 코딩 에이전트는 보통 샌드박스 안에서 일하고 결과물만 밖으로 꺼내 줍니다.',
+ ana:'놀이터 모래밭입니다. 마음껏 쌓고 부숴도 모래밭 밖은 멀쩡합니다.',
+ rel:['code-execution','permissions','local-cloud']},
+{id:'sycophancy',ko:'아첨 경향',en:'Sycophancy',lines:[7,2],lv:2,
+ def:'AI가 사용자의 의견이나 기대에 지나치게 맞장구치는 경향.',
+ body:'"이 자소서 괜찮지?"라고 물으면 장점만 말해 줄 수 있습니다. 정직한 평가가 필요하면 "면접관 입장에서 떨어뜨릴 이유 세 가지를 찾아 줘"처럼 비판적인 역할과 질문을 주는 것이 효과적입니다.',
+ ana:'뭘 해도 "좋네요"라는 친구보다, 고칠 점을 말해 주는 선배가 실력에 도움이 됩니다.',
+ rel:['role-prompting','hallucination','alignment']},
+{id:'alignment',ko:'정렬',en:'Alignment',lines:[7],lv:3,
+ def:'AI가 사람의 의도와 가치에 맞게 행동하도록 만드는 연구와 노력.',
+ body:'시킨 일을 문자 그대로가 아니라 진짜 의도대로 하는지, 해로운 일을 거절하는지, 정직한지를 다룹니다. AI가 강력해질수록 AI 회사들이 가장 중요하게 다루는 분야입니다.',
+ ana:'능력 좋은 직원이 회사의 가치와 고객을 생각하며 일하도록 조직 문화를 만드는 일입니다.',
+ rel:['guardrail','agi','sycophancy']},
+{id:'data-controls',ko:'데이터 학습 설정',en:'Data Controls',lines:[7],lv:1,
+ def:'내 대화 내용이 다음 모델 학습에 쓰일지를 정하는 설정.',
+ body:'회사 기밀, 다른 사람의 개인정보, 주민등록번호나 계좌번호 같은 민감한 정보는 설정과 관계없이 넣지 않는 것이 원칙입니다. 회사 업무에 쓸 때는 회사가 허용한 계정(팀, 엔터프라이즈 요금제)과 사내 지침을 먼저 확인하세요.',
+ ana:'카페에서 통화할 때 옆 테이블을 의식하는 것과 같습니다. 민감한 얘기는 애초에 하지 않습니다.',
+ gpt:'설정의 데이터 제어 > 모델 개선 옵션',
+ cl:'설정의 개인정보 > 모델 개선 참여 옵션',
+ rel:['training','memory','permissions']}
+],
+route:[
+ {t:'AI와 친해지기',d:'AI가 무엇이고 왜 가끔 틀리는지',ids:['llm','model-app','token','context-window','hallucination']},
+ {t:'잘 시키기',d:'원하는 결과를 받는 말하기',ids:['prompt','prompt-engineering','few-shot','role-prompting','system-prompt']},
+ {t:'일 맡기기',d:'챗봇에서 에이전트로',ids:['agent','agent-loop','tool-use','harness','main-agent','sub-agent']},
+ {t:'연결하기',d:'내 자료와 서비스에 붙이기',ids:['web-search','connector','mcp','skill','project','memory']},
+ {t:'굴리기',d:'사람 없이 돌아가게',ids:['automation','trigger','scheduled-task','workflow-agent']},
+ {t:'안전하게',d:'사고 없이 오래 쓰기',ids:['prompt-injection','permissions','hitl','data-controls']}
+],
+steps:[
+ {p:'요청이 들어옵니다. 이 한 문장이 프롬프트입니다.',ids:['prompt']},
+ {p:'하네스가 요청을 포장합니다. 시스템 프롬프트, 기억해 둔 사용자 정보, 쓸 수 있는 도구 목록을 붙여 모델에게 넘깁니다.',ids:['harness','system-prompt','memory']},
+ {p:'메인 에이전트가 계획을 세웁니다. 회사별 조사, 표 정리, 검토의 세 단계로 나눕니다.',ids:['main-agent','agent-loop']},
+ {p:'서브 에이전트 세 개가 동시에 출발합니다. 각자 한 회사씩 웹을 검색해 공고를 찾고 핵심만 요약해 돌려줍니다.',ids:['sub-agent','web-search','tool-use']},
+ {p:'메인 에이전트가 요약을 모아 코드로 표를 만들고 마감일과 숫자를 검산합니다.',ids:['code-execution','structured-output']},
+ {p:'완성된 표를 아티팩트로 띄워 바로 공유할 수 있게 합니다.',ids:['artifact']},
+ {p:'"매주 월요일마다 다시 해 줘"라고 하면 예약 작업이 됩니다. 이제는 사람 대신 트리거가 1번을 누릅니다.',ids:['scheduled-task','trigger','automation']},
+ {p:'지원서 메일 발송처럼 되돌릴 수 없는 일 앞에서는 멈추고 사람의 승인을 받습니다.',ids:['hitl','permissions']}
+],
+pairs:[
+ {h:'모델 ↔ 앱',a:{l:'모델',id:'model-app',t:'두뇌 자체. GPT-5.6, Claude Opus 5.5 같은 이름.'},b:{l:'앱',id:'model-app',t:'두뇌를 감싼 제품. ChatGPT, Claude 앱, Claude Code.'},s:'엔진과 자동차입니다. 같은 엔진도 어떤 차에 넣느냐에 따라 할 수 있는 일이 다릅니다.'},
+ {h:'컨텍스트 윈도우 ↔ 메모리',a:{l:'컨텍스트 윈도우',id:'context-window',t:'이번 대화 안의 단기 기억. 길어지면 앞부분을 잊습니다.'},b:{l:'메모리',id:'memory',t:'대화를 넘어 남는 장기 기억. 설정에서 보고 지울 수 있습니다.'},s:'책상 위에 펼친 자료와 서랍 속 파일의 차이입니다.'},
+ {h:'추론(Reasoning) ↔ 추론(Inference)',a:{l:'생각하기',id:'reasoning',t:'답하기 전에 속으로 따져 보는 기능. 정확도를 올립니다.'},b:{l:'인퍼런스',id:'inference',t:'모델을 실제로 돌려 답을 받는 일 자체. "추론 비용"의 그 추론.'},s:'우리말로는 둘 다 "추론"이라 헷갈립니다. 영어 이름을 같이 기억하세요.'},
+ {h:'챗봇 ↔ 에이전트',a:{l:'챗봇',id:'agent',t:'묻는 말에 답하고 멈춥니다.'},b:{l:'에이전트',id:'agent',t:'목표를 받아 도구를 쓰며 끝까지 해냅니다.'},s:'안내 데스크 직원과 일을 통째로 맡기는 비서의 차이입니다.'},
+ {h:'워크플로우 ↔ 에이전트',a:{l:'워크플로우',id:'workflow-agent',t:'사람이 정한 순서대로 움직입니다. 예측 가능합니다.'},b:{l:'에이전트',id:'agent',t:'AI가 순서를 스스로 정합니다. 유연하지만 예측이 어렵습니다.'},s:'정해진 반복 업무는 워크플로우, 매번 다른 일은 에이전트가 맞습니다.'},
+ {h:'커넥터 ↔ 스킬',a:{l:'커넥터',id:'connector',t:'손발. 외부 서비스에 손댈 수 있게 해 줍니다.'},b:{l:'스킬',id:'skill',t:'노하우. 일을 어떻게 잘할지 알려 줍니다.'},s:'커넥터는 무엇을 만질 수 있는지, 스킬은 어떻게 잘할지를 정합니다. 둘을 묶어 한 번에 설치하는 것이 플러그인입니다.'},
+ {h:'프롬프트 인젝션 ↔ 탈옥',a:{l:'프롬프트 인젝션',id:'prompt-injection',t:'제3자가 문서나 웹에 숨긴 지시로 AI를 조종합니다.'},b:{l:'탈옥',id:'jailbreak',t:'사용자가 말 돌리기로 안전 규칙을 우회합니다.'},s:'누가 공격하느냐가 다릅니다. 에이전트를 쓸 때 더 신경 쓸 쪽은 인젝션입니다.'},
+ {h:'파인튜닝 ↔ RAG',a:{l:'파인튜닝',id:'fine-tuning',t:'모델을 다시 가르칩니다. 비싸고 느립니다.'},b:{l:'RAG',id:'rag',t:'필요한 자료를 찾아 보여 줍니다. 빠르고 최신 내용이 반영됩니다.'},s:'대부분의 맞춤은 프롬프트와 RAG로 충분합니다. 파인튜닝은 마지막 수단입니다.'}
+],
+plan:[
+ {d:1,t:'AI와 첫인사',s:'AI, 모델, 앱이 무엇인지 구분합니다',ids:['ai','genai','agi','llm','model-app','model-tiers','multimodal'],m:'ChatGPT와 Claude에 같은 질문을 하나씩 던지고, 각 앱에서 지금 고른 모델 이름을 찾아 적어 보기'},
+ {d:2,t:'AI의 한계 알기',s:'왜 틀리고, 어디까지 기억하는지',ids:['token','context-window','hallucination','knowledge-cutoff','web-search','sycophancy'],m:'최근 뉴스 하나를 "검색하지 말고 답해 줘"와 "웹 검색해서 답해 줘"로 각각 물어보고 두 답을 비교하기'},
+ {d:3,t:'잘 시키기',s:'좋은 부탁의 네 가지 재료',ids:['prompt','prompt-engineering','role-prompting','few-shot','system-prompt','structured-output'],m:'같은 부탁을 대충 쓴 버전과 목적·맥락·형식·예시를 넣은 버전으로 보내고 결과 비교하기'},
+ {d:4,t:'생각과 학습',s:'추론, 인퍼런스, 학습의 차이',ids:['reasoning','cot','inference','training','fine-tuning','open-weight','benchmark'],m:'생각하기(Thinking, 확장 사고)를 켠 상태와 끈 상태로 같은 기획 문제를 풀게 하고 차이를 한 줄로 적기'},
+ {d:5,t:'챗봇에서 에이전트로',s:'AI가 스스로 일하는 방식',ids:['agent','agent-loop','tool-use','deep-research','background-task','code-execution'],m:'딥 리서치나 리서치 기능으로 관심 있는 회사 하나를 조사시키고, 인용된 출처 두 개를 직접 열어 확인하기'},
+ {d:6,t:'하네스와 팀플',s:'메인·서브 에이전트와 그들을 감싼 틀',ids:['harness','main-agent','sub-agent','multi-agent','orchestration','context-engineering'],m:'"구조 한눈에" 그림을 보며 하네스와 메인·서브 에이전트를 서로에게 1분씩 설명하기'},
+ {d:7,t:'연결하기',s:'AI에 손발과 매뉴얼 붙이기',ids:['connector','mcp','api','plugin','skill','artifact'],m:'설정에서 연결할 수 있는 커넥터(앱) 목록을 살펴보고, 하나를 골라 어떤 권한을 요구하는지 읽어 보기'},
+ {d:8,t:'나만의 작업 공간',s:'기억, 프로젝트, 자료 찾기',ids:['memory','project','custom-gpt','rag','embedding','data-controls'],m:'프로젝트를 하나 만들어 지침 한 줄과 파일 하나를 넣고 대화해 보기. 메모리와 데이터 학습 설정 화면도 열어 보기'},
+ {d:9,t:'자동화 입문',s:'사람 없이 돌아가게 만들기',ids:['automation','trigger','scheduled-task','workflow-agent','pipeline','nocode'],m:'매일 반복하는 일 하나를 골라 "트리거 → 단계 → 결과" 세 칸짜리 설계도로 적어 보기'},
+ {d:10,t:'화면을 다루는 AI',s:'크론부터 컴퓨터 사용까지',ids:['cron','webhook','rpa','computer-use','browser-agent','local-cloud'],m:'"평일 오전 8시"와 "매주 금요일 오후 6시 30분"을 크론으로 직접 적어 보고, 크론 카드의 예시와 맞춰 보기'},
+ {d:11,t:'직접 만들어 보기',s:'코딩 에이전트와 개발 도구',ids:['coding-agent','vibe-coding','cli','sdk','api-key','evals'],m:'Claude 아티팩트나 ChatGPT 캔버스로 "할 일 체크리스트" 웹페이지를 바이브 코딩으로 만들어 보기'},
+ {d:12,t:'안전하게 쓰기',s:'사고 없이 오래 쓰는 법',ids:['prompt-injection','jailbreak','guardrail','permissions','hitl','sandbox','alignment'],m:'지금까지 연결한 커넥터 권한과 예약 작업을 점검하고, 승인 없이 실행되는 동작이 있는지 확인하기'},
+ {d:13,t:'총복습 1',s:'1~6일차 38역 다시 타기',review:[1,6],ms:['1~6일차 용어를 암기 카드 "모르는 것만" 모드로 넘겨 0장 만들기','"헷갈리는 짝" 8쌍의 한쪽을 가리고 서로 퀴즈 내기','"구조 한눈에" 예시 8단계를 그림 없이 순서대로 말해 보기']},
+ {d:14,t:'총복습 2 · 졸업',s:'7~12일차 37역과 졸업 미션',review:[7,12],ms:['7~12일차 용어를 암기 카드 "모르는 것만" 모드로 넘겨 0장 만들기','대응표를 보고 ChatGPT와 Claude에서 처음 써 보는 기능을 하나씩 실행하기','매주 반복하는 일 하나를 실제 예약 작업이나 자동화로 만들어 보기']}
+],
+compare:[
+ {k:'만든 회사',g:'OpenAI',c:'Anthropic'},
+ {k:'대표 모델',id:'model-tiers',g:'GPT-5.6 계열, GPT-6 Astra(2026년 9월 공개)',c:'Claude Haiku, Sonnet, Opus 5.5와 Mythos 등급의 Claude Fable 5.1'},
+ {k:'앱',id:'model-app',g:'ChatGPT (웹, 모바일, 데스크톱)',c:'Claude (웹, 모바일, 데스크톱)'},
+ {k:'일을 통째로 맡기기',id:'agent',g:'ChatGPT Work (2026년 7월 출시)',c:'Claude 앱 자체의 여러 단계 작업과 결과물 만들기'},
+ {k:'코딩 에이전트',id:'coding-agent',g:'Codex (데스크톱 앱의 Codex 모드, CLI)',c:'Claude Code (터미널, 웹, 데스크톱, 모바일)'},
+ {k:'생각하기',id:'reasoning',g:'Thinking 모델, 생각 강도 선택',c:'확장 사고'},
+ {k:'깊은 조사',id:'deep-research',g:'딥 리서치',c:'리서치'},
+ {k:'외부 서비스 연결',id:'connector',g:'앱(Apps, 옛 이름 커넥터), MCP',c:'커넥터, MCP'},
+ {k:'작업 매뉴얼',id:'skill',g:'Skills (Codex)',c:'스킬'},
+ {k:'확장 묶음',id:'plugin',g:'플러그인',c:'플러그인'},
+ {k:'결과물 공간',id:'artifact',g:'캔버스, Sites',c:'아티팩트'},
+ {k:'자료와 지침 묶음',id:'project',g:'프로젝트, GPTs',c:'프로젝트'},
+ {k:'기본 지침',id:'system-prompt',g:'맞춤형 지침',c:'개인 선호 설정, 프로젝트 지침'},
+ {k:'장기 기억',id:'memory',g:'메모리',c:'메모리'},
+ {k:'예약 실행',id:'scheduled-task',g:'예약 작업(Scheduled)',c:'예약 작업'},
+ {k:'브라우저 조작',id:'browser-agent',g:'데스크톱 앱 내장 브라우저, Codex 크롬 확장',c:'Claude in Chrome, 데스크톱 앱 내장 브라우저'},
+ {k:'컴퓨터 조작',id:'computer-use',g:'Computer Use (데스크톱 앱)',c:'컴퓨터 사용 (데스크톱 앱 연결)'},
+ {k:'팀 메신저 속 AI',g:'슬랙의 @Codex',c:'Claude Tag (슬랙)'},
+ {k:'개발자용',id:'api',g:'OpenAI API, Agents SDK',c:'Claude API, Claude Agent SDK'}
+]
+};
+</script>
+
+<script>
+(function(){
+  var D = window.AIMAP, L = D.lines, T = D.terms, byId = {};
+  T.forEach(function(t){ byId[t.id] = t; });
+  var LV = {1:'입문',2:'기본',3:'심화'};
+  var cnt = {};
+  T.forEach(function(t){
+    var p = t.lines[0]; cnt[p] = (cnt[p]||0) + 1;
+    t.code = p + '-' + String(cnt[p]).padStart(2,'0');
+    t.hay = [t.ko,t.en,(t.aka||[]).join(' '),t.def,t.body,t.ana,t.gpt||'',t.cl||''].join(' ').toLowerCase().replace(/\s+/g,'');
+  });
+  var lineName = {}; L.forEach(function(l){ lineName[l.n] = l.name; });
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function short(t){ return t.short || t.ko.split(' · ')[0]; }
+  function chip(id, label){ var t = byId[id]; if(!t) return ''; return '<a class="tref" href="#t-'+t.id+'" style="--c:var(--l'+t.lines[0]+')">'+esc(label||short(t))+'</a>'; }
+  function marks(t){ return t.lines.map(function(n){ return '<span class="mk" style="--c:var(--l'+n+')">'+n+'</span>'; }).join(''); }
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s){ return document.querySelector(s); }
+
+  $('#stat').textContent = '2026.10 기준 · 용어 ' + T.length + ' · 노선 ' + L.length;
+  $('#signLines').innerHTML = L.map(function(l){ return '<span style="background:var(--l'+l.n+')"></span>'; }).join('');
+
+  /* 노선도 */
+  $('#mapLines').innerHTML = L.map(function(l){
+    var prim = T.filter(function(t){ return t.lines[0] === l.n; });
+    var xf = T.filter(function(t){ return t.lines.indexOf(l.n) > 0; });
+    var st = prim.concat(xf).map(function(t){
+      return '<li><a class="st'+(t.lines.length>1?' xfer':'')+'" href="#t-'+t.id+'" title="'+t.code+' '+esc(t.ko)+'"><i></i><span>'+esc(short(t))+'</span></a></li>';
+    }).join('');
+    return '<div class="mline" style="--c:var(--l'+l.n+')"><button type="button" class="mline-h" data-goline="'+l.n+'" aria-label="'+l.n+'호선 '+esc(l.name)+' 용어만 사전에서 보기"><span class="mk">'+l.n+'</span><span><b>'+esc(l.name)+'</b><small>'+esc(l.desc)+'</small></span></button><ol class="stations">'+st+'</ol></div>';
+  }).join('');
+
+  /* 공부 순서 */
+  $('#routeList').innerHTML = D.route.map(function(r,i){
+    return '<li class="stop"><span class="stop-n">'+(i+1)+'</span><div class="stop-body"><b>'+esc(r.t)+'</b><p>'+esc(r.d)+'</p><div class="chips">'+r.ids.map(function(id){return chip(id);}).join('')+'</div></div></li>';
+  }).join('');
+
+  /* 예시 단계 */
+  $('#steps').innerHTML = D.steps.map(function(s){
+    return '<li><div><p>'+esc(s.p)+'</p><div class="chips">'+s.ids.map(function(id){return chip(id);}).join('')+'</div></div></li>';
+  }).join('');
+
+  /* 헷갈리는 짝 */
+  $('#pairList').innerHTML = D.pairs.map(function(p){
+    var side = function(x){ return '<div>'+chip(x.id, x.l)+'<p>'+esc(x.t)+'</p></div>'; };
+    return '<article class="pair"><h3>'+esc(p.h)+'</h3><div class="pair-ab">'+side(p.a)+side(p.b)+'</div><p class="pair-sum"><b>한 줄 정리</b>'+esc(p.s)+'</p></article>';
+  }).join('');
+
+  /* 대응표 */
+  $('#cmpBody').innerHTML = D.compare.map(function(r){
+    var k = r.id ? '<a href="#t-'+r.id+'">'+esc(r.k)+'</a>' : esc(r.k);
+    return '<tr><td>'+k+'</td><td>'+esc(r.g)+'</td><td>'+esc(r.c)+'</td></tr>';
+  }).join('');
+
+  /* 사전 카드 */
+  function cardHTML(t){
+    var prod = (t.gpt||t.cl) ? '<dl class="prod"><div><dt>ChatGPT에서는</dt><dd>'+esc(t.gpt||'해당 기능 없음')+'</dd></div><div><dt>Claude에서는</dt><dd>'+esc(t.cl||'해당 기능 없음')+'</dd></div></dl>' : '';
+    var rel = (t.rel && t.rel.length) ? '<div class="rel"><span class="rel-l">함께 보기</span>'+t.rel.map(function(id){return chip(id);}).join('')+'</div>' : '';
+    var xf = t.lines.length>1 ? '<span class="xf">환승 '+t.lines.map(function(n){return n+'호선';}).join('·')+'</span>' : '';
+    return '<article class="card" id="t-'+t.id+'" tabindex="-1">'
+      + '<header class="card-h"><span class="card-marks">'+marks(t)+'</span><div class="card-names"><h3>'+esc(t.ko)+'</h3><span class="en">'+esc(t.en)+'</span></div><div class="card-meta">'+xf+'<span class="code">'+t.code+'</span><span class="lv">'+LV[t.lv]+'</span></div></header>'
+      + '<p class="def">'+esc(t.def)+'</p>'
+      + '<p class="body">'+esc(t.body)+'</p>'
+      + '<p class="ana"><span class="tag">비유</span><span>'+esc(t.ana)+'</span></p>'
+      + prod + rel + '</article>';
+  }
+  $('#cards').innerHTML = T.map(cardHTML).join('');
+  var cardEl = {};
+  T.forEach(function(t){ cardEl[t.id] = document.getElementById('t-'+t.id); });
+
+  /* 필터 */
+  var state = {line:0, lv:0, q:''};
+  var visible = T.slice();
+  $('#lineChips').innerHTML = '<button type="button" class="lc" data-line="0" aria-pressed="true">전체</button>' + L.map(function(l){
+    return '<button type="button" class="lc" data-line="'+l.n+'" aria-pressed="false"><span class="mk sm" style="--c:var(--l'+l.n+')">'+l.n+'</span>'+esc(l.name)+'</button>';
+  }).join('');
+  var qEl = $('#q'), lvEl = $('#lv');
+
+  function apply(){
+    var q = state.q.toLowerCase().replace(/\s+/g,'');
+    visible = [];
+    T.forEach(function(t){
+      var ok = (!state.line || t.lines.indexOf(state.line) >= 0) && (!state.lv || t.lv === state.lv) && (!q || t.hay.indexOf(q) >= 0);
+      cardEl[t.id].hidden = !ok;
+      if(ok) visible.push(t);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.lc'), function(b){
+      b.setAttribute('aria-pressed', String(Number(b.getAttribute('data-line')) === state.line));
+    });
+    $('#count').textContent = visible.length + '개 용어';
+    var em = $('#empty');
+    if(!visible.length){
+      em.textContent = '조건에 맞는 용어가 없습니다. 검색어를 줄이거나 노선과 난이도를 "전체"로 바꿔 보세요.';
+      em.hidden = false;
+    } else { em.hidden = true; }
+    $('#sideList').innerHTML = visible.map(function(t){
+      return '<a href="#t-'+t.id+'" style="--c:var(--l'+t.lines[0]+')"><i></i><span>'+esc(short(t))+'</span><em>'+t.code+'</em></a>';
+    }).join('');
+  }
+  function resetFilters(){
+    state = {line:0, lv:0, q:''}; qEl.value = ''; lvEl.value = '0'; apply();
+  }
+  $('#lineChips').addEventListener('click', function(e){
+    var b = e.target.closest('.lc'); if(!b) return;
+    state.line = Number(b.getAttribute('data-line')); apply();
+  });
+  lvEl.addEventListener('change', function(){ state.lv = Number(lvEl.value); apply(); });
+  qEl.addEventListener('input', function(){ state.q = qEl.value.trim(); apply(); });
+  apply();
+
+  /* 노선도 노선 이름 → 사전 필터 */
+  $('#mapLines').addEventListener('click', function(e){
+    var b = e.target.closest('[data-goline]'); if(!b) return;
+    state.line = Number(b.getAttribute('data-goline')); state.q = ''; qEl.value = ''; apply();
+    document.getElementById('dict').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+  });
+
+  /* 용어 링크 이동 */
+  var hlTimer = null;
+  function goTo(id){
+    var el = cardEl[id]; if(!el) return;
+    if(el.hidden) resetFilters();
+    el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+    Array.prototype.forEach.call(document.querySelectorAll('.card.hl'), function(c){ c.classList.remove('hl'); });
+    el.classList.add('hl');
+    try { el.focus({preventScroll:true}); } catch(e){}
+    clearTimeout(hlTimer); hlTimer = setTimeout(function(){ el.classList.remove('hl'); }, 2200);
+    try { history.replaceState(null, '', '#t-' + id); } catch(e){}
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#t-"]'); if(!a) return;
+    e.preventDefault(); goTo(a.getAttribute('href').slice(3));
+  });
+  if(location.hash && location.hash.indexOf('#t-') === 0){
+    var hid = location.hash.slice(3);
+    setTimeout(function(){ goTo(hid); }, 60);
+  }
+
+  /* 툴바 높이 */
+  var tb = $('#toolbar');
+  function setTbh(){ document.documentElement.style.setProperty('--tbh', tb.offsetHeight + 'px'); }
+  setTbh();
+  if(window.ResizeObserver){ new ResizeObserver(setTbh).observe(tb); } else { window.addEventListener('resize', setTbh); }
+
+  /* 암기 카드 */
+  var fc = $('#fc'), fcCard = $('#fcCard'), fcProg = $('#fcProg'), fcKnown = $('#fcKnown'), fcOnly = $('#fcOnly');
+  var known = {
+    has: function(id){ return S.known.indexOf(id) >= 0; },
+    add: function(id){ if(S.known.indexOf(id) < 0) S.known.push(id); },
+    delete: function(id){ var i = S.known.indexOf(id); if(i >= 0) S.known.splice(i, 1); }
+  };
+  function saveKnown(){ commit(); }
+  var fcLabel = '';
+  var base = [], deck = [], fi = 0, flipped = false, onlyUnknown = false, lastFocus = null;
+  function buildDeck(keepId){
+    deck = onlyUnknown ? base.filter(function(t){ return !known.has(t.id); }) : base.slice();
+    fi = 0; flipped = false;
+    if(keepId){ var k = deck.findIndex(function(t){ return t.id === keepId; }); if(k >= 0) fi = k; }
+  }
+  function scopeLabel(){
+    var parts = [state.line ? (state.line + '호선 ' + lineName[state.line]) : '전체 노선'];
+    if(state.lv) parts.push(LV[state.lv]);
+    if(state.q) parts.push('검색 "' + state.q + '"');
+    return parts.join(' · ');
+  }
+  function drawFC(){
+    var kn = base.filter(function(t){ return known.has(t.id); }).length;
+    $('#fcScope').textContent = fcLabel || scopeLabel();
+    fcOnly.setAttribute('aria-pressed', onlyUnknown ? 'true' : 'false');
+    if(!deck.length){
+      fcCard.innerHTML = '<span class="fc-empty">이 범위의 카드를 모두 외웠습니다.<br>"모르는 것만"을 끄면 전체 카드로 돌아갑니다.</span>';
+      fcProg.textContent = '0 / 0 · 알아요 ' + kn + ' / ' + base.length;
+      fcKnown.disabled = true; fcKnown.setAttribute('aria-pressed','false');
+      return;
+    }
+    fcKnown.disabled = false;
+    var t = deck[fi];
+    fcCard.innerHTML = flipped
+      ? '<span class="fc-ko sm">'+esc(short(t))+'</span><span class="fc-def">'+esc(t.def)+'</span><span class="fc-ana"><span class="tag">비유</span> '+esc(t.ana)+'</span><span class="fc-hint">눌러서 앞면으로</span>'
+      : '<span class="card-marks">'+marks(t)+'</span><span class="fc-ko">'+esc(t.ko)+'</span><span class="fc-en">'+esc(t.en)+'</span><span class="fc-hint">눌러서 뜻 보기</span>';
+    fcProg.textContent = (fi+1) + ' / ' + deck.length + ' · 알아요 ' + kn + ' / ' + base.length;
+    fcKnown.setAttribute('aria-pressed', known.has(t.id) ? 'true' : 'false');
+  }
+  function openFC(list, label){
+    lastFocus = document.activeElement;
+    base = (Array.isArray(list) && list.length) ? list.slice() : (visible.length ? visible.slice() : T.slice());
+    fcLabel = (Array.isArray(list) && list.length && label) ? label : '';
+    buildDeck(); fc.hidden = false; document.documentElement.style.overflow = 'hidden';
+    drawFC(); fcCard.focus();
+  }
+  function closeFC(){
+    fc.hidden = true; document.documentElement.style.overflow = '';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function step(d){ if(!deck.length) return; fi = (fi + d + deck.length) % deck.length; flipped = false; drawFC(); }
+  $('#fcOpen').addEventListener('click', function(){ openFC(); });
+  $('#fcClose').addEventListener('click', closeFC);
+  fc.addEventListener('click', function(e){ if(e.target === fc) closeFC(); });
+  fcCard.addEventListener('click', function(){ if(!deck.length) return; flipped = !flipped; drawFC(); });
+  $('#fcNext').addEventListener('click', function(){ step(1); });
+  $('#fcPrev').addEventListener('click', function(){ step(-1); });
+  $('#fcShuffle').addEventListener('click', function(){
+    for(var i = deck.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i+1)); var tmp = deck[i]; deck[i] = deck[j]; deck[j] = tmp; }
+    fi = 0; flipped = false; drawFC();
+  });
+  fcKnown.addEventListener('click', function(){
+    if(!deck.length) return;
+    var t = deck[fi];
+    if(known.has(t.id)) known.delete(t.id); else known.add(t.id);
+    saveKnown();
+    if(onlyUnknown && known.has(t.id)){ deck.splice(fi,1); if(fi >= deck.length) fi = 0; flipped = false; }
+    drawFC();
+  });
+  fcOnly.addEventListener('click', function(){
+    var cur = deck[fi] ? deck[fi].id : null;
+    onlyUnknown = !onlyUnknown; buildDeck(cur); drawFC();
+  });
+  document.addEventListener('keydown', function(e){
+    if(fc.hidden) return;
+    if(e.key === 'Escape'){ e.preventDefault(); closeFC(); }
+    else if(e.key === 'ArrowRight'){ e.preventDefault(); step(1); }
+    else if(e.key === 'ArrowLeft'){ e.preventDefault(); step(-1); }
+  });
+
+  /* ---------- 학습 플랜: 진행 기록 ---------- */
+  var PLAN = D.plan;
+  var LS_KEY = 'aiMap.plan.v1';
+  function fmt(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function todayStr(){ return fmt(new Date()); }
+  function blank(){ return {v:1, checks:{}, done:{}, active:[], known:[], updatedAt:0}; }
+  function norm(s){
+    var b = blank(); if(!s || typeof s !== 'object') return b;
+    if(s.checks && typeof s.checks === 'object') Object.keys(s.checks).forEach(function(k){ if(s.checks[k] === true) b.checks[k] = true; });
+    if(s.done && typeof s.done === 'object') Object.keys(s.done).forEach(function(k){ if(typeof s.done[k] === 'string') b.done[k] = s.done[k]; });
+    if(Array.isArray(s.active)) b.active = s.active.filter(function(x){ return typeof x === 'string'; }).slice(-120);
+    if(Array.isArray(s.known)) b.known = s.known.filter(function(x){ return typeof x === 'string' && byId[x]; });
+    if(typeof s.updatedAt === 'number') b.updatedAt = s.updatedAt;
+    return b;
+  }
+  var S = blank();
+  try { var raw = localStorage.getItem(LS_KEY); if(raw) S = norm(JSON.parse(raw)); } catch(e){}
+  try {
+    var oldKnown = JSON.parse(localStorage.getItem('aiMap.known') || '[]');
+    if(Array.isArray(oldKnown)) oldKnown.forEach(function(id){ if(byId[id] && S.known.indexOf(id) < 0) S.known.push(id); });
+  } catch(e){}
+  function saveLocal(){ try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){} }
+
+  var ref = null, writing = false, again = false, wTimer = null, retries = 0;
+  function setSync(mode){
+    var el = $('#sync'); if(!el) return;
+    el.className = 'sync ' + mode;
+    el.textContent = mode === 'account' ? '내 계정에 저장 중 · 다른 기기에서도 이어집니다' : '이 브라우저에 저장 중';
+  }
+  function commit(){
+    S.updatedAt = Date.now(); saveLocal();
+    if(ref){ clearTimeout(wTimer); wTimer = setTimeout(flush, 700); }
+  }
+  function flush(){
+    if(!ref) return;
+    if(writing){ again = true; return; }
+    writing = true;
+    ref.set(JSON.parse(JSON.stringify(S))).then(function(){
+      retries = 0; setSync('account');
+    }, function(e){
+      if(e && e.code === 'unavailable' && retries < 2){ retries++; again = true; }
+      else { ref = null; setSync('local'); }
+    }).then(function(){
+      writing = false;
+      if(again && ref){ again = false; setTimeout(flush, 1500); }
+    });
+  }
+
+  /* ---------- 학습 플랜: 화면 ---------- */
+  function dayItems(p){
+    var it = [];
+    if(p.ids){
+      p.ids.forEach(function(id){ it.push('t:' + id); });
+      if(p.d > 1) it.push('d' + p.d + ':r');
+      it.push('d' + p.d + ':p');
+    } else {
+      p.ms.forEach(function(m, i){ it.push('d' + p.d + ':m' + i); });
+    }
+    return it;
+  }
+  var ITEMS = {};
+  PLAN.forEach(function(p){ ITEMS[p.d] = dayItems(p); });
+  var TOTAL = PLAN.reduce(function(a, p){ return a + ITEMS[p.d].length; }, 0);
+  function cntDay(p){ return ITEMS[p.d].filter(function(k){ return S.checks[k]; }).length; }
+  function isDone(p){ return cntDay(p) === ITEMS[p.d].length; }
+  function curDay(){ for(var i = 0; i < PLAN.length; i++){ if(!isDone(PLAN[i])) return PLAN[i].d; } return PLAN.length + 1; }
+  function termsIn(a, b){
+    var out = [];
+    PLAN.forEach(function(p){ if(p.ids && p.d >= a && p.d <= b) p.ids.forEach(function(id){ out.push(byId[id]); }); });
+    return out;
+  }
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function shortDate(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? (Number(m[2]) + '.' + Number(m[3])) : ''; }
+  function streak(){
+    var set = new Set(S.active), d = new Date(), n = 0;
+    if(!set.has(fmt(d))){ d.setDate(d.getDate() - 1); if(!set.has(fmt(d))) return 0; }
+    while(set.has(fmt(d))){ n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+  function stat(label, big, sub){ return '<div class="stat"><span>' + label + '</span><b>' + big + '</b><small>' + sub + '</small></div>'; }
+
+  function dayCard(p){
+    var rows = '', lines = [];
+    if(p.ids){
+      p.ids.forEach(function(id){ var l = byId[id].lines[0]; if(lines.indexOf(l) < 0) lines.push(l); });
+      rows += p.ids.map(function(id){
+        var t = byId[id];
+        return '<li><label class="ck"><input type="checkbox" data-k="t:' + id + '"><span class="dot" style="--c:var(--l' + t.lines[0] + ')"></span><span class="ck-t">' + esc(t.ko) + '<em>' + t.code + '</em></span></label><a class="ck-go" href="#t-' + id + '">설명</a></li>';
+      }).join('');
+      rows += '<li class="ck-sep">미션</li>';
+      if(p.d > 1) rows += '<li><label class="ck"><input type="checkbox" data-k="d' + p.d + ':r"><span class="mtag">복습</span><span class="ck-t">어제 배운 DAY ' + (p.d - 1) + ' 용어를 암기 카드로 한 번 넘기기</span></label><button type="button" class="linkbtn" data-fcr="' + (p.d - 1) + '-' + (p.d - 1) + '">카드 열기</button></li>';
+      rows += '<li><label class="ck"><input type="checkbox" data-k="d' + p.d + ':p"><span class="mtag">실습</span><span class="ck-t">' + esc(p.m) + '</span></label></li>';
+    } else {
+      rows += p.ms.map(function(m, i){
+        return '<li><label class="ck"><input type="checkbox" data-k="d' + p.d + ':m' + i + '"><span class="mtag">' + (i === 0 ? '복습' : '미션') + '</span><span class="ck-t">' + esc(m) + '</span></label>'
+          + (i === 0 ? '<button type="button" class="linkbtn" data-fcr="' + p.review[0] + '-' + p.review[1] + '">카드 열기</button>' : '') + '</li>';
+      }).join('');
+    }
+    var range = p.ids ? (p.d + '-' + p.d) : (p.review[0] + '-' + p.review[1]);
+    var marksHtml = lines.map(function(n){ return '<span class="mk sm" style="--c:var(--l' + n + ')">' + n + '</span>'; }).join('');
+    return '<article class="day" id="day-' + p.d + '">'
+      + '<header class="day-h"><div class="day-tt"><span class="day-n">DAY ' + pad2(p.d) + ' · ' + (p.ids ? p.ids.length + '역' : '총복습') + '</span><b>' + esc(p.t) + '</b><p>' + esc(p.s) + '</p></div>'
+      + '<div class="day-meta"><span class="day-badge" hidden></span><span class="day-count"></span></div></header>'
+      + '<div class="day-bar"><i></i></div>'
+      + '<ul class="cklist">' + rows + '</ul>'
+      + '<div class="day-f"><span class="day-lines">' + marksHtml + '</span><button type="button" class="btn sm" data-fcr="' + range + '">' + (p.ids ? '이 날 용어 카드로 외우기' : 'DAY ' + p.review[0] + '~' + p.review[1] + ' 카드 넘기기') + '</button></div>'
+      + '</article>';
+  }
+  $('#days').innerHTML = PLAN.map(dayCard).join('');
+  $('#trackLine').innerHTML = '<span class="track-fill" id="trackFill"></span>' + PLAN.map(function(p){
+    return '<button type="button" class="tst" data-day="' + p.d + '" aria-label="DAY ' + p.d + ' ' + esc(p.t) + '"><i>' + p.d + '</i></button>';
+  }).join('');
+
+  function updatePlan(){
+    var cur = curDay(), t = todayStr();
+    var doneToday = Object.keys(S.done).some(function(k){ return S.done[k] === t; });
+    var checked = 0, daysDone = 0, termsChecked = 0;
+    PLAN.forEach(function(p){
+      var card = document.getElementById('day-' + p.d);
+      var c = cntDay(p), n = ITEMS[p.d].length, done = c === n;
+      checked += c; if(done) daysDone++;
+      Array.prototype.forEach.call(card.querySelectorAll('input[data-k]'), function(inp){ inp.checked = !!S.checks[inp.getAttribute('data-k')]; });
+      card.querySelector('.day-count').textContent = c + ' / ' + n;
+      card.querySelector('.day-bar i').style.width = Math.round(c / n * 100) + '%';
+      var badge = card.querySelector('.day-badge');
+      if(done){ badge.hidden = false; badge.className = 'day-badge ok'; badge.textContent = '완료 ' + shortDate(S.done['d' + p.d]); }
+      else if(p.d === cur){ badge.hidden = false; badge.className = 'day-badge'; badge.textContent = doneToday ? '다음 역' : '오늘 할 차례'; }
+      else { badge.hidden = true; }
+      card.classList.toggle('done', done);
+      card.classList.toggle('cur', p.d === cur && !done);
+      var st = document.querySelector('.tst[data-day="' + p.d + '"]');
+      if(st) st.className = 'tst' + (done ? ' done' : (p.d === cur ? ' cur' : (c > 0 ? ' part' : '')));
+    });
+    T.forEach(function(x){ if(S.checks['t:' + x.id]) termsChecked++; });
+    $('#trackFill').style.setProperty('--p', String(Math.max(0, Math.min(1, (cur - 1) / (PLAN.length - 1)))));
+    var stk = streak(), activeToday = S.active.indexOf(t) >= 0;
+    $('#stats').innerHTML = stat('전체 진행률', Math.round(checked / TOTAL * 100) + '%', checked + ' / ' + TOTAL + ' 항목')
+      + stat('완료한 날', daysDone + '일', PLAN.length + '일 중')
+      + stat('연속 학습', stk + '일', activeToday ? '오늘 기록 완료' : (stk ? '오늘 체크하면 ' + (stk + 1) + '일' : '오늘 첫 체크로 시작'))
+      + stat('체크한 용어', termsChecked + '개', T.length + '개 중');
+    var cells = '', now = new Date(), set = new Set(S.active);
+    for(var i = 13; i >= 0; i--){
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i), s = fmt(d), on = set.has(s);
+      cells += '<i class="' + (on ? 'on' : '') + (i === 0 ? ' today' : '') + '" title="' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일' + (on ? ' · 학습함' : '') + '"></i>';
+    }
+    $('#recent').innerHTML = cells;
+    var html;
+    if(cur > PLAN.length){
+      html = '<div class="today-t"><span class="lbl">완주</span><b>14일 노선을 모두 지났습니다</b><p>가끔 암기 카드의 "모르는 것만" 모드로 복습하면 오래 남습니다.</p></div><button type="button" class="btn here" data-fcr="1-12">전체 카드 복습</button>';
+    } else {
+      var p = PLAN[cur - 1], left = ITEMS[cur].length - cntDay(p);
+      html = '<div class="today-t"><span class="lbl">' + (doneToday ? '오늘 몫 완료 · 다음 역' : '오늘 할 차례') + '</span><b>DAY ' + pad2(cur) + ' · ' + esc(p.t) + '</b><p>' + esc(p.s) + ' · 남은 항목 ' + left + '개</p></div><button type="button" class="btn here" data-day="' + cur + '">DAY ' + cur + '로 가기</button>';
+    }
+    $('#today').innerHTML = html;
+  }
+
+  $('#days').addEventListener('change', function(e){
+    var inp = e.target.closest('input[data-k]'); if(!inp) return;
+    var k = inp.getAttribute('data-k'), t = todayStr();
+    if(inp.checked){
+      S.checks[k] = true;
+      if(S.active.indexOf(t) < 0){ S.active.push(t); if(S.active.length > 120) S.active = S.active.slice(-120); }
+    } else { delete S.checks[k]; }
+    PLAN.forEach(function(p){
+      var key = 'd' + p.d;
+      if(isDone(p)){ if(!S.done[key]) S.done[key] = t; }
+      else if(S.done[key]) delete S.done[key];
+    });
+    commit(); updatePlan();
+  });
+  document.addEventListener('click', function(e){
+    var r = e.target.closest('[data-fcr]');
+    if(r){
+      var ab = r.getAttribute('data-fcr').split('-').map(Number);
+      openFC(termsIn(ab[0], ab[1]), ab[0] === ab[1] ? 'DAY ' + ab[0] + ' 용어' : 'DAY ' + ab[0] + '~' + ab[1] + ' 용어');
+      return;
+    }
+    var dd = e.target.closest('[data-day]');
+    if(dd){
+      var el = document.getElementById('day-' + dd.getAttribute('data-day'));
+      if(el) el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'start'});
+    }
+  });
+  updatePlan();
+
+  /* ---------- 계정 저장 연결 ---------- */
+  (async function(){
+    try {
+      if(!window.claude || typeof window.claude.use !== 'function') return;
+      var db = await window.claude.use('db');
+      var user = await window.claude.use('user');
+      if(!db || !user) return;
+      var uid = await user.id();
+      if(!uid) return;
+      var canW = await user.can('data.write');
+      if(canW === false) return;
+      var r = db.doc('data/users/' + uid + '/plan');
+      var snap = await r.get();
+      ref = r;
+      if(snap.exists){
+        var remote = norm(snap.data());
+        setSync('account');
+        if(remote.updatedAt >= S.updatedAt){ S = remote; saveLocal(); updatePlan(); if(!fc.hidden) drawFC(); }
+        else { flush(); }
+      } else if(S.updatedAt > 0){
+        flush();
+      } else if(canW === true){
+        setSync('account');
+      }
+      r.onSnapshot(function(sn){
+        if(!sn.exists || sn.metadata.hasPendingWrites) return;
+        var d = norm(sn.data());
+        if(d.updatedAt > S.updatedAt){ S = d; saveLocal(); updatePlan(); if(!fc.hidden) drawFC(); }
+      }, function(){});
+    } catch(e){ ref = null; setSync('local'); }
+  })();
+})();
+</script>
+
+</body>
+</html>
